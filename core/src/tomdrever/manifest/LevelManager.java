@@ -2,14 +2,10 @@ package tomdrever.manifest;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.internal.LinkedTreeMap;
-import tomdrever.manifest.components.PositionComponent;
-import tomdrever.manifest.components.RenderedComponent;
-import tomdrever.manifest.components.SizeComponent;
-import tomdrever.manifest.components.SpriteComponent;
+import tomdrever.manifest.components.*;
 import tomdrever.manifest.data.Level;
 import tomdrever.manifest.data.Planet;
 
@@ -69,7 +65,8 @@ public class LevelManager {
                         .add(new RenderedComponent())
                         .add(new SpriteComponent(Assets.PLANET_EMPTY_TEXTURE))
                         .add(new PositionComponent(x, y))
-                        .add(new SizeComponent(planetSize, planetSize)));
+                        .add(new SizeComponent(planetSize, planetSize))
+                        .add(new TextComponent(String.format("%d", planet.population), Assets.PLANET_FONT)));
 
                 x += xPadding;
                 x += planetSize;

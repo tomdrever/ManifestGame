@@ -9,11 +9,13 @@ public class Planet {
     }
 
     private int initialPopulation;
+    public int population;
     private int growthRate = 1;
     public Type type;
 
     public Planet(int initialPopulation, Type type) {
         this.initialPopulation = initialPopulation;
+        this.population = initialPopulation;
         this.type = type;
     }
 
