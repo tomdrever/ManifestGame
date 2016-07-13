@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import tomdrever.manifest.systems.ClickSystem;
 import tomdrever.manifest.systems.RenderingSystem;
 import tomdrever.manifest.systems.TextRenderingSystem;
 
@@ -31,6 +32,9 @@ public class ManifestGame extends ApplicationAdapter {
 
         TextRenderingSystem textRenderingSystem = new TextRenderingSystem(spriteBatch);
         engine.addSystem(textRenderingSystem);
+
+        ClickSystem clickSystem = new ClickSystem();
+        engine.addSystem(clickSystem);
 
         LevelManager levelManager = null;
         try {

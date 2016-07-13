@@ -1,24 +1,24 @@
 package tomdrever.manifest.systems;
 
-import com.badlogic.ashley.core.*;
+import com.badlogic.ashley.core.ComponentMapper;
+import com.badlogic.ashley.core.Entity;
+import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import tomdrever.manifest.components.PositionComponent;
+import tomdrever.manifest.components.BoundsComponent;
 import tomdrever.manifest.components.RenderedComponent;
-import tomdrever.manifest.components.SizeComponent;
 import tomdrever.manifest.components.SpriteComponent;
 
 public class RenderingSystem extends IteratingSystem {
     private SpriteBatch spriteBatch;
 
     private ComponentMapper<SpriteComponent> spriteComponentMap = ComponentMapper.getFor(SpriteComponent.class);
-    private ComponentMapper<PositionComponent> positionComponentMap = ComponentMapper.getFor(PositionComponent.class);
-    private ComponentMapper<SizeComponent> sizeComponentMap = ComponentMapper.getFor(SizeComponent.class);
+    private ComponentMapper<BoundsComponent> boundsComponentMap = ComponentMapper.getFor(BoundsComponent.class);
 
     public RenderingSystem(SpriteBatch spriteBatch) {
-        super(Family.all(RenderedComponent.class, SpriteComponent.class, PositionComponent.class, SizeComponent.class).get());
+        super(Family.all(RenderedComponent.class, SpriteComponent.class, BoundsComponent.class).get());
         this.spriteBatch = spriteBatch;
     }
 
@@ -27,12 +27,12 @@ public class RenderingSystem extends IteratingSystem {
 
         if (entity.getComponent(RenderedComponent.class).visible) {
             Sprite entitySprite = spriteComponentMap.get(entity).sprite;
-            Vector2 entityPosition = positionComponentMap.get(entity).position;
-            Vector2 entitySize = sizeComponentMap.get(entity).size;
+            Vector2 entityPosition = boundsComponentMap.get(entity).getPosition();
+            Vector2 entitySize = boundsComponentMap.get(entity).getSize();
 
             spriteBatch.draw(entitySprite.getTexture(),
-                    entityPosition.x - (entitySize.x / 2),
-                    entityPosition.y - (entitySize.y / 2),
+                    entityPosition.x,
+                    entityPosition.y,
                     entitySize.x,
                     entitySize.y);
         }

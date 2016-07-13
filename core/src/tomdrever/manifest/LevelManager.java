@@ -64,9 +64,14 @@ public class LevelManager {
                 entities.add(new Entity()
                         .add(new RenderedComponent())
                         .add(new SpriteComponent(Assets.PLANET_EMPTY_TEXTURE))
-                        .add(new PositionComponent(x, y))
-                        .add(new SizeComponent(planetSize, planetSize))
-                        .add(new TextComponent(String.format("%d", planet.population), Assets.PLANET_FONT)));
+                        .add(new BoundsComponent(x, y, planetSize, planetSize))
+                        .add(new TextComponent(String.format("%d", planet.population), Assets.PLANET_FONT))
+                        .add(new OnClickComponent(new OnClickListener() {
+                            @Override
+                            public void run() {
+                                System.out.println("planet clicked!");
+                            }
+                        })));
 
                 x += xPadding;
                 x += planetSize;
