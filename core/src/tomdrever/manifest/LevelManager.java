@@ -48,31 +48,33 @@ public class LevelManager {
 
         Level level = levels.get(name);
 
-        // y is TOP-TO-BOTTOM
-        // x is LEFT-TO-RIGHT
-
         int yPlanetCount = level.planets.length;
-        // Padding is 0 if count is 1, or 100 - (10 * count)
         int yPadding = yPlanetCount == 1 ? 0 : 50 - (10 * yPlanetCount);
-        int y = (Gdx.graphics.getHeight() / 2) + (((yPlanetCount - 1) * (planetSize)) / 2) + ((yPlanetCount) * yPadding);
+        int y = (Gdx.graphics.getHeight() / 2) +
+                (((yPlanetCount - 1) * (planetSize)) / 2)
+                    + ((yPlanetCount) * yPadding);
 
         for (Planet[] planetRow : level.planets) {
             int xPlanetCount = planetRow.length;
             int xPadding = xPlanetCount == 1 ? 0 : 75 - (15 * xPlanetCount);
-            int x = (Gdx.graphics.getWidth() / 2) - ((((xPlanetCount - 1) * (planetSize)) / 2) + ((xPlanetCount) * xPadding));
+            int x = (Gdx.graphics.getWidth() / 2) -
+                    ((((xPlanetCount - 1) * (planetSize)) / 2)
+                            + ((xPlanetCount) * xPadding));
+
             y -= yPadding;
+
             for (Planet planet: planetRow) {
                 x += xPadding;
                 entities.add(new Entity()
                         .add(new RenderedComponent())
-                        .add(new SpriteComponent(new Texture("planets/empty.png")))
+                        .add(new SpriteComponent(Assets.PLANET_EMPTY_TEXTURE))
                         .add(new PositionComponent(x, y))
                         .add(new SizeComponent(planetSize, planetSize)));
+
                 x += xPadding;
                 x += planetSize;
             }
 
-            // nextY = initialY + (planetSize(planet size) + yPadding)
             y -= yPadding;
             y -= planetSize;
         }

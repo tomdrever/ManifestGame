@@ -60,4 +60,9 @@ public class ManifestGame extends ApplicationAdapter {
                 10, 10);
         spriteBatch.end();
     }
+
+    @Override
+    public void dispose() {
+        spriteBatch.dispose();
+    }
 }
