@@ -1,0 +1,93 @@
+[{
+	"name": "Level 1",
+	"prerequisiteLevelName": "none",
+	"planets": [
+		[{
+			"initialPopulation": 20,
+			"growthRate": 1,
+			"type": "EMPTY"
+		},
+		{
+          	"initialPopulation": 20,
+          	"growthRate": 1,
+          	"type": "EMPTY"
+        },
+        {
+            "initialPopulation": 20,
+            "growthRate": 1,
+            "type": "EMPTY"
+        }],
+        [{
+        	"initialPopulation": 20,
+        	"growthRate": 1,
+        	"type": "EMPTY"
+        }, {
+        	"initialPopulation": 20,
+        	"growthRate": 1,
+        	"type": "EMPTY"
+        }]
+	]
+}, {
+	"name": "Level 2",
+	"prerequisiteLevelName": "Level 1",
+	"planets": [
+		[{
+			"initialPopulation": 20,
+			"growthRate": 1,
+			"type": "EMPTY"
+		}]
+	]
+}, {
+	"name": "Level 3",
+	"prerequisiteLevelName": "Level 2",
+	"planets": [
+		[{
+			"initialPopulation": 0,
+			"growthRate": 1,
+			"type": "EMPTY"
+		}, {
+			"initialPopulation": 20,
+			"growthRate": 1,
+			"type": "PLAYER"
+		}]
+	]
+}, {
+	"name": "Level 4",
+	"prerequisiteLevelName": "Level 3",
+	"planets": [
+		[{
+			"initialPopulation": 0,
+			"growthRate": 1,
+			"type": "EMPTY"
+		}],
+		[{
+			"initialPopulation": 20,
+			"growthRate": 1,
+			"type": "EMPTY"
+		}]
+	]
+},
+{
+  	"name": "Level 5",
+  	"prerequisiteLevelName": "Level 4",
+  	"planets": [
+  		[{
+  			"initialPopulation": 0,
+  			"growthRate": 1,
+  			"type": "EMPTY"
+  		},{
+            "initialPopulation": 20,
+            "growthRate": 1,
+            "type": "EMPTY"
+        }],
+  		[{
+        	"initialPopulation": 0,
+        	"growthRate": 1,
+        	"type": "EMPTY"
+        },{
+            "initialPopulation": 20,
+            "growthRate": 1,
+            "type": "EMPTY"
+        }]
+  	]
+}]
