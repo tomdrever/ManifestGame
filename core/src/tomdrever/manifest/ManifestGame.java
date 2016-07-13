@@ -5,8 +5,6 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import tomdrever.manifest.systems.ClickSystem;
 import tomdrever.manifest.systems.RenderingSystem;
@@ -17,8 +15,6 @@ import java.io.IOException;
 public class ManifestGame extends ApplicationAdapter {
 	private Engine engine;
     private SpriteBatch spriteBatch;
-
-    private Sprite debug;
 	
 	@Override
 	public void create () {
@@ -49,8 +45,6 @@ public class ManifestGame extends ApplicationAdapter {
         for (Entity entity:entities) {
             engine.addEntity(entity);
         }
-
-        debug = new Sprite(new Texture("badlogic.jpg"));
     }
 
     @Override
@@ -60,10 +54,6 @@ public class ManifestGame extends ApplicationAdapter {
 
         spriteBatch.begin();
         engine.update(Gdx.graphics.getDeltaTime());
-        spriteBatch.draw(debug,
-                (Gdx.graphics.getWidth()/2) - 5,
-                (Gdx.graphics.getHeight()/2) - 5,
-                10, 10);
         spriteBatch.end();
     }
 
