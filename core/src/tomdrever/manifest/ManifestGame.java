@@ -20,6 +20,7 @@ public class ManifestGame extends ApplicationAdapter {
 		engine = new Engine();
         spriteBatch = new SpriteBatch();
 
+        // TODO - loading screen?
         Assets.loadAssets();
 
         RenderingSystem renderingSystem = new RenderingSystem(spriteBatch);
@@ -31,9 +32,9 @@ public class ManifestGame extends ApplicationAdapter {
         ClickSystem clickSystem = new ClickSystem();
         engine.addSystem(clickSystem);
 
-        LevelManager levelManager = LevelManager.load();
+        Levels levels = Levels.load();
 
-        Entity[] entities = levelManager.getLevel("Level 1");
+        Entity[] entities = levels.getLevel("Level 1");
         for (Entity entity:entities) {
             engine.addEntity(entity);
         }
@@ -53,6 +54,7 @@ public class ManifestGame extends ApplicationAdapter {
 
     @Override
     public void dispose() {
+        Assets.disposeOfAssets();
         spriteBatch.dispose();
     }
 }

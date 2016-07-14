@@ -15,27 +15,27 @@ import tomdrever.manifest.data.Planet;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class LevelManager {
+public class Levels {
     private Map<String, Level> levels;
     
     private static int planetSize = 100;
 
-    private LevelManager() { }
+    private Levels() { }
 
-    public static LevelManager load() {
-        LevelManager levelManager = new LevelManager();
+    public static Levels load() {
+        Levels levels = new Levels();
 
         Gson gson = new GsonBuilder().create();
-        Level[] loadedLevels = gson.fromJson((String)Assets.getAsset("LEVELS_TEXT").get(), Level[].class);
+        Level[] loadedLevels = gson.fromJson((String) Assets.getAsset("LEVELS_TEXT").get(), Level[].class);
 
         Map<String, Level> loadedLevelsDict = new LinkedTreeMap<String, Level>() ;
         for (Level level: loadedLevels) {
             loadedLevelsDict.put(level.name, level);
         }
 
-        levelManager.levels = loadedLevelsDict;
+        levels.levels = loadedLevelsDict;
 
-        return levelManager;
+        return levels;
     }
 
     public Entity[] getLevel(String name) {

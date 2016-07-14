@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.HashMap;
 
-public class Assets {
+public class Assets{
     private static HashMap<String, Resource> assets;
 
     private static final HashMap<String, ResourceType> resourceTypes;
@@ -24,6 +24,7 @@ public class Assets {
         resourceTypes.put("json", ResourceType.TEXT);
         resourceTypes.put("fnt", ResourceType.FONT);
     }
+
     private enum ResourceType { TEXTURE, AUDIO, TEXT, FONT }
 
     public static void loadAssets() {
@@ -107,6 +108,12 @@ public class Assets {
         }
         else {
             return asset;
+        }
+    }
+
+    public static void disposeOfAssets() {
+        for (Resource resource: assets.values()) {
+            resource.dispose();
         }
     }
 }
