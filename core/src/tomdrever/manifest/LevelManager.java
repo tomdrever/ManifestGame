@@ -2,9 +2,12 @@ package tomdrever.manifest;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.internal.LinkedTreeMap;
+import tomdrever.manifest.assets.Assets;
 import tomdrever.manifest.components.*;
 import tomdrever.manifest.data.Level;
 import tomdrever.manifest.data.Planet;
@@ -25,7 +28,7 @@ public class LevelManager {
     public static LevelManager load() throws IOException {
         LevelManager levelManager = new LevelManager();
 
-        byte[] encoded = Files.readAllBytes(Paths.get("levels.txt"));
+        byte[] encoded = Files.readAllBytes(Paths.get("levels.json"));
         Gson gson = new GsonBuilder().create();
         Level[] loadedLevels = gson.fromJson( new String(encoded), Level[].class);
 
@@ -61,15 +64,18 @@ public class LevelManager {
 
             for (Planet planet: planetRow) {
                 x += xPadding;
+                // TODO - create some form of planet manager to assign and change planet types, (...)
+                // handle pop and AI fleets
                 entities.add(new Entity()
                         .add(new RenderedComponent())
-                        .add(new SpriteComponent(Assets.PLANET_EMPTY_TEXTURE))
+                        .add(new SpriteComponent((Texture) Assets.getAsset("EMPTY_TEXTURE").get()))
                         .add(new BoundsComponent(x, y, planetSize, planetSize))
-                        .add(new TextComponent(String.format("%d", planet.population), Assets.PLANET_FONT))
+                        .add(new TextComponent(String.format("%d", planet.population), new BitmapFont()))
                         .add(new OnClickComponent(new OnClickListener() {
                             @Override
                             public void run() {
                                 System.out.println("planet clicked!");
+                                // TODO - implement clickable planets, with selection toggle
                             }
                         })));
 

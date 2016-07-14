@@ -6,6 +6,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import tomdrever.manifest.assets.Assets;
 import tomdrever.manifest.systems.ClickSystem;
 import tomdrever.manifest.systems.RenderingSystem;
 import tomdrever.manifest.systems.TextRenderingSystem;
@@ -45,6 +46,8 @@ public class ManifestGame extends ApplicationAdapter {
         for (Entity entity:entities) {
             engine.addEntity(entity);
         }
+
+        // TODO - OVERVIEW - Planets (pop, selection), Fleets (creation, handling), UI (levels screen)
     }
 
     @Override
