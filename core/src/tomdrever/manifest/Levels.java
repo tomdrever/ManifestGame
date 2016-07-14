@@ -2,13 +2,10 @@ package tomdrever.manifest;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.internal.LinkedTreeMap;
 import tomdrever.manifest.assets.Assets;
-import tomdrever.manifest.components.*;
 import tomdrever.manifest.data.Level;
 import tomdrever.manifest.data.Planet;
 
@@ -17,8 +14,6 @@ import java.util.Map;
 
 public class Levels {
     private Map<String, Level> levels;
-    
-    private static int planetSize = 100;
 
     private Levels() { }
 
@@ -46,14 +41,14 @@ public class Levels {
         int yPlanetCount = level.planets.length;
         int yPadding = yPlanetCount == 1 ? 0 : 50 - (10 * yPlanetCount);
         int y = (Gdx.graphics.getHeight() / 2) +
-                (((yPlanetCount - 1) * (planetSize)) / 2)
+                (((yPlanetCount - 1) * (Planets.planetSize)) / 2)
                     + ((yPlanetCount) * yPadding);
 
         for (Planet[] planetRow : level.planets) {
             int xPlanetCount = planetRow.length;
             int xPadding = xPlanetCount == 1 ? 0 : 75 - (15 * xPlanetCount);
             int x = (Gdx.graphics.getWidth() / 2) -
-                    ((((xPlanetCount - 1) * (planetSize)) / 2)
+                    ((((xPlanetCount - 1) * (Planets.planetSize)) / 2)
                             + ((xPlanetCount) * xPadding));
 
             y -= yPadding;
@@ -61,26 +56,15 @@ public class Levels {
             for (Planet planet: planetRow) {
                 x += xPadding;
                 // TODO - create some form of planet manager to assign and change planet types, (...)
-                // handle pop and AI fleets
-                entities.add(new Entity()
-                        .add(new RenderedComponent())
-                        .add(new SpriteComponent((Texture) Assets.getAsset("EMPTY_TEXTURE").get()))
-                        .add(new BoundsComponent(x, y, planetSize, planetSize))
-                        .add(new TextComponent(String.format("%d", planet.population), new BitmapFont()))
-                        .add(new OnClickComponent(new OnClickListener() {
-                            @Override
-                            public void run() {
-                                System.out.println("planet clicked!");
-                                // TODO - implement clickable planets, with selection toggle
-                            }
-                        })));
+                // handle pop (and AI fleets?)
+                entities.add(Planets.newPlanetEntity(planet, x, y));
 
                 x += xPadding;
-                x += planetSize;
+                x += Planets.planetSize;
             }
 
             y -= yPadding;
-            y -= planetSize;
+            y -= Planets.planetSize;
         }
 
         return entities.toArray(new Entity[]{});

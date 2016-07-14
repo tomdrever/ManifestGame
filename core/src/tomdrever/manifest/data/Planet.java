@@ -5,22 +5,13 @@ public class Planet {
         EMPTY,
         PLAYER,
         PASSIVE,
-        ENEMY
+        ENEMY,
+        NOMADIC
     }
 
-    private int initialPopulation;
+    public int initialPopulation;
     public int population;
-    private int growthRate = 1;
+    public float growthRate = 1;
+    public float sizeMultiplier = 1;
     public Type type;
-
-    public Planet(int initialPopulation, Type type) {
-        this.initialPopulation = initialPopulation;
-        this.population = initialPopulation;
-        this.type = type;
-    }
-
-    public Planet(Type type) {
-        this.initialPopulation = 20;
-        this.type = type;
-    }
 }

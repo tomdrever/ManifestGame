@@ -3,10 +3,12 @@ package tomdrever.manifest.components;
 import com.badlogic.ashley.core.Component;
 
 public class OnClickComponent implements Component {
-    public OnClickListener onClickListener;
-    public boolean isClicked = false;
+    public OnClick onClick;
+    public boolean clickable = true;
 
-    public OnClickComponent(OnClickListener onClickListener) {
-        this.onClickListener = onClickListener;
+    public int cooldown = 100;
+
+    public OnClickComponent(OnClick onClick) {
+        this.onClick = onClick;
     }
 }

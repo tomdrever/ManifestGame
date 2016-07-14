@@ -3,28 +3,38 @@
 	"prerequisiteLevelName": "none",
 	"planets": [
 		[{
-			"initialPopulation": 20,
-			"growthRate": 1,
-			"type": "EMPTY"
+			"initialPopulation": 5,
+            "population": 5,
+            "sizeMultiplier": 0.75,
+			"growthRate": 1.5,
+			"type": "NOMADIC"
 		},
 		{
-          	"initialPopulation": 20,
-          	"growthRate": 1,
-          	"type": "EMPTY"
+          "initialPopulation": 40,
+          "population": 40,
+          "sizeMultiplier": 1.5,
+          "growthRate": 1,
+          "type": "PASSIVE"
         },
         {
-            "initialPopulation": 20,
-            "growthRate": 1,
-            "type": "EMPTY"
+          "initialPopulation": 0,
+          "population": 0,
+          "sizeMultiplier": 1,
+          "growthRate": 1,
+          "type": "EMPTY"
         }],
         [{
-        	"initialPopulation": 20,
-        	"growthRate": 1,
-        	"type": "EMPTY"
+          "initialPopulation": 20,
+          "population": 20,
+          "sizeMultiplier": 0.9,
+          "growthRate": 1,
+          "type": "ENEMY"
         }, {
-        	"initialPopulation": 20,
-        	"growthRate": 1,
-        	"type": "EMPTY"
+          "initialPopulation": 20,
+          "population": 20,
+          "sizeMultiplier": 1,
+          "growthRate": 1,
+          "type": "PLAYER"
         }]
 	]
 }, {
@@ -32,9 +42,11 @@
 	"prerequisiteLevelName": "Level 1",
 	"planets": [
 		[{
-			"initialPopulation": 20,
-			"growthRate": 1,
-			"type": "EMPTY"
+          "initialPopulation": 20,
+          "population": 20,
+          "sizeMultiplier": 1,
+          "growthRate": 1,
+          "type": "EMPTY"
 		}]
 	]
 }, {
@@ -42,13 +54,17 @@
 	"prerequisiteLevelName": "Level 2",
 	"planets": [
 		[{
-			"initialPopulation": 0,
-			"growthRate": 1,
-			"type": "EMPTY"
+          "initialPopulation": 20,
+          "population": 20,
+          "sizeMultiplier": 1,
+          "growthRate": 1,
+          "type": "EMPTY"
 		}, {
-			"initialPopulation": 20,
-			"growthRate": 1,
-			"type": "PLAYER"
+          "initialPopulation": 20,
+          "population": 20,
+          "sizeMultiplier": 1,
+          "growthRate": 1,
+          "type": "EMPTY"
 		}]
 	]
 }, {
@@ -56,14 +72,18 @@
 	"prerequisiteLevelName": "Level 3",
 	"planets": [
 		[{
-			"initialPopulation": 0,
-			"growthRate": 1,
-			"type": "EMPTY"
+          "initialPopulation": 20,
+          "population": 20,
+          "sizeMultiplier": 1,
+          "growthRate": 1,
+          "type": "EMPTY"
 		}],
 		[{
-			"initialPopulation": 20,
-			"growthRate": 1,
-			"type": "EMPTY"
+          "initialPopulation": 20,
+          "population": 20,
+          "sizeMultiplier": 1,
+          "growthRate": 1,
+          "type": "EMPTY"
 		}]
 	]
 },
@@ -72,22 +92,30 @@
   	"prerequisiteLevelName": "Level 4",
   	"planets": [
   		[{
-  			"initialPopulation": 0,
-  			"growthRate": 1,
-  			"type": "EMPTY"
+          "initialPopulation": 20,
+          "population": 20,
+          "sizeMultiplier": 1,
+          "growthRate": 1,
+          "type": "EMPTY"
   		},{
-            "initialPopulation": 20,
-            "growthRate": 1,
-            "type": "EMPTY"
+          "initialPopulation": 20,
+          "population": 20,
+          "sizeMultiplier": 1,
+          "growthRate": 1,
+          "type": "EMPTY"
         }],
   		[{
-        	"initialPopulation": 0,
-        	"growthRate": 1,
-        	"type": "EMPTY"
+          "initialPopulation": 20,
+          "population": 20,
+          "sizeMultiplier": 1,
+          "growthRate": 1,
+          "type": "EMPTY"
         },{
-            "initialPopulation": 20,
-            "growthRate": 1,
-            "type": "EMPTY"
+          "initialPopulation": 20,
+          "population": 20,
+          "sizeMultiplier": 1,
+          "growthRate": 1,
+          "type": "EMPTY"
         }]
   	]
 }]
