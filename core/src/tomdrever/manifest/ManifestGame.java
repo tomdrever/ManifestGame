@@ -11,8 +11,6 @@ import tomdrever.manifest.systems.ClickSystem;
 import tomdrever.manifest.systems.RenderingSystem;
 import tomdrever.manifest.systems.TextRenderingSystem;
 
-import java.io.IOException;
-
 public class ManifestGame extends ApplicationAdapter {
 	private Engine engine;
     private SpriteBatch spriteBatch;
@@ -33,14 +31,7 @@ public class ManifestGame extends ApplicationAdapter {
         ClickSystem clickSystem = new ClickSystem();
         engine.addSystem(clickSystem);
 
-        LevelManager levelManager = null;
-        try {
-            levelManager = LevelManager.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        assert levelManager != null;
+        LevelManager levelManager = LevelManager.load();
 
         Entity[] entities = levelManager.getLevel("Level 1");
         for (Entity entity:entities) {

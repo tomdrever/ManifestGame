@@ -12,9 +12,6 @@ import tomdrever.manifest.components.*;
 import tomdrever.manifest.data.Level;
 import tomdrever.manifest.data.Planet;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -25,12 +22,11 @@ public class LevelManager {
 
     private LevelManager() { }
 
-    public static LevelManager load() throws IOException {
+    public static LevelManager load() {
         LevelManager levelManager = new LevelManager();
 
-        byte[] encoded = Files.readAllBytes(Paths.get("levels.json"));
         Gson gson = new GsonBuilder().create();
-        Level[] loadedLevels = gson.fromJson( new String(encoded), Level[].class);
+        Level[] loadedLevels = gson.fromJson((String)Assets.getAsset("LEVELS_TEXT").get(), Level[].class);
 
         Map<String, Level> loadedLevelsDict = new LinkedTreeMap<String, Level>() ;
         for (Level level: loadedLevels) {
