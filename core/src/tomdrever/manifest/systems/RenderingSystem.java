@@ -24,7 +24,6 @@ public class RenderingSystem extends IteratingSystem {
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-
         if (entity.getComponent(RenderedComponent.class).visible) {
             Sprite entitySprite = spriteComponentMap.get(entity).sprite;
             Vector2 entityPosition = boundsComponentMap.get(entity).getPosition();

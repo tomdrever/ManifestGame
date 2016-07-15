@@ -13,8 +13,11 @@ public class Planets {
     private static Entity newBasicPlanet(Planet planet, float x, float y) {
         Entity newEmptyPlanet = new Entity();
         newEmptyPlanet.add(new RenderedComponent());
+        PopulationComponent popComponent = new PopulationComponent(
+                planet.initialPopulation, planet.growthRate, planet.maxPopulation);
+        newEmptyPlanet.add(popComponent);
         newEmptyPlanet.add(new BoundsComponent(x, y, planetSize * planet.sizeMultiplier, planetSize * planet.sizeMultiplier));
-        newEmptyPlanet.add(new TextComponent(String.format("%d", planet.population),
+        newEmptyPlanet.add(new TextComponent(popComponent.toString(),
                 (BitmapFont) Assets.getAsset("POPULATION_FONT").get()));
         newEmptyPlanet.add(new OnClickComponent(new OnClick() {
             @Override

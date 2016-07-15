@@ -4,34 +4,34 @@
 	"planets": [
 		[{
 			"initialPopulation": 5,
-            "population": 5,
+            "maxPopulation": 15,
             "sizeMultiplier": 0.75,
 			"growthRate": 1.5,
 			"type": "NOMADIC"
 		},
 		{
-          "initialPopulation": 40,
-          "population": 40,
+          "initialPopulation": 20,
+          "maxPopulation": 50,
           "sizeMultiplier": 1.5,
           "growthRate": 1,
           "type": "PASSIVE"
         },
         {
           "initialPopulation": 0,
-          "population": 0,
+          "maxPopulation": 0,
           "sizeMultiplier": 1,
           "growthRate": 1,
           "type": "EMPTY"
         }],
         [{
-          "initialPopulation": 20,
-          "population": 20,
+          "initialPopulation": 12,
+          "maxPopulation": 32,
           "sizeMultiplier": 0.9,
           "growthRate": 1,
           "type": "ENEMY"
         }, {
-          "initialPopulation": 20,
-          "population": 20,
+          "initialPopulation": 16,
+          "maxPopulation": 32,
           "sizeMultiplier": 1,
           "growthRate": 1,
           "type": "PLAYER"
@@ -42,8 +42,8 @@
 	"prerequisiteLevelName": "Level 1",
 	"planets": [
 		[{
-          "initialPopulation": 20,
-          "population": 20,
+          "initialPopulation": 10,
+          "maxPopulation": 20,
           "sizeMultiplier": 1,
           "growthRate": 1,
           "type": "EMPTY"
@@ -54,14 +54,14 @@
 	"prerequisiteLevelName": "Level 2",
 	"planets": [
 		[{
-          "initialPopulation": 20,
-          "population": 20,
+          "initialPopulation": 10,
+          "maxPopulation": 20,
           "sizeMultiplier": 1,
           "growthRate": 1,
           "type": "EMPTY"
 		}, {
-          "initialPopulation": 20,
-          "population": 20,
+          "initialPopulation": 10,
+          "maxPopulation": 20,
           "sizeMultiplier": 1,
           "growthRate": 1,
           "type": "EMPTY"
@@ -73,14 +73,14 @@
 	"planets": [
 		[{
           "initialPopulation": 20,
-          "population": 20,
+          "maxPopulation": 34,
           "sizeMultiplier": 1,
           "growthRate": 1,
           "type": "EMPTY"
 		}],
 		[{
-          "initialPopulation": 20,
-          "population": 20,
+          "initialPopulation": 2,
+          "maxPopulation": 14,
           "sizeMultiplier": 1,
           "growthRate": 1,
           "type": "EMPTY"
@@ -92,27 +92,27 @@
   	"prerequisiteLevelName": "Level 4",
   	"planets": [
   		[{
-          "initialPopulation": 20,
-          "population": 20,
+          "initialPopulation": 4,
+          "maxPopulation": 20,
           "sizeMultiplier": 1,
           "growthRate": 1,
           "type": "EMPTY"
   		},{
           "initialPopulation": 20,
-          "population": 20,
+          "maxPopulation": 20,
           "sizeMultiplier": 1,
           "growthRate": 1,
           "type": "EMPTY"
         }],
   		[{
           "initialPopulation": 20,
-          "population": 20,
+          "maxPopulation": 20,
           "sizeMultiplier": 1,
           "growthRate": 1,
           "type": "EMPTY"
         },{
           "initialPopulation": 20,
-          "population": 20,
+          "maxPopulation": 20,
           "sizeMultiplier": 1,
           "growthRate": 1,
           "type": "EMPTY"

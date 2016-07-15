@@ -10,7 +10,7 @@ public class Planet {
     }
 
     public int initialPopulation;
-    public int population;
+    public int maxPopulation;
     public float growthRate = 1;
     public float sizeMultiplier = 1;
     public Type type;
