@@ -3,13 +3,14 @@ package tomdrever.manifest;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import tomdrever.manifest.assets.Assets;
+import tomdrever.manifest.assets.Resources;
 import tomdrever.manifest.components.*;
 import tomdrever.manifest.data.Planet;
 
 public class Planets {
     public static int planetSize = 100;
 
+    // REM - not actually a  planet type, returns a sort of planet-template
     private static Entity newBasicPlanet(Planet planet, float x, float y) {
         Entity newEmptyPlanet = new Entity();
         newEmptyPlanet.add(new RenderedComponent());
@@ -18,7 +19,7 @@ public class Planets {
         newEmptyPlanet.add(popComponent);
         newEmptyPlanet.add(new BoundsComponent(x, y, planetSize * planet.sizeMultiplier, planetSize * planet.sizeMultiplier));
         newEmptyPlanet.add(new TextComponent(popComponent.toString(),
-                (BitmapFont) Assets.getAsset("POPULATION_FONT").get()));
+                (BitmapFont) Resources.loadResource("PLANET_POPULATION_FONT").get()));
         newEmptyPlanet.add(new OnClickComponent(new OnClick() {
             @Override
             public void run(){
@@ -31,31 +32,31 @@ public class Planets {
 
     private static Entity newEmptyPlanet(Planet planet, float x, float y) {
         Entity planetEntity = newBasicPlanet(planet, x, y);
-        planetEntity.add(new SpriteComponent((Texture) Assets.getAsset("EMPTY_TEXTURE").get()));
+        planetEntity.add(new SpriteComponent((Texture) Resources.loadResource("PLANET_EMPTY_TEXTURE").get()));
         return planetEntity;
     }
 
     private static Entity newPlayerPlanet(Planet planet, float x, float y) {
         Entity planetEntity = newBasicPlanet(planet, x, y);
-        planetEntity.add(new SpriteComponent((Texture) Assets.getAsset("PLAYER_TEXTURE").get()));
+        planetEntity.add(new SpriteComponent((Texture) Resources.loadResource("PLANET_PLAYER_TEXTURE").get()));
         return planetEntity;
     }
 
     private static Entity newEnemyPlanet(Planet planet, float x, float y) {
         Entity planetEntity = newBasicPlanet(planet, x, y);
-        planetEntity.add(new SpriteComponent((Texture) Assets.getAsset("ENEMY_TEXTURE").get()));
+        planetEntity.add(new SpriteComponent((Texture) Resources.loadResource("PLANET_ENEMY_TEXTURE").get()));
         return planetEntity;
     }
 
     private static Entity newPassivePlanet(Planet planet, float x, float y) {
         Entity planetEntity = newBasicPlanet(planet, x, y);
-        planetEntity.add(new SpriteComponent((Texture) Assets.getAsset("PASSIVE_TEXTURE").get()));
+        planetEntity.add(new SpriteComponent((Texture) Resources.loadResource("PLANET_PASSIVE_TEXTURE").get()));
         return planetEntity;
     }
 
     private static Entity newNomadicPlanet(Planet planet, float x, float y) {
         Entity planetEntity = newBasicPlanet(planet, x, y);
-        planetEntity.add(new SpriteComponent((Texture) Assets.getAsset("NOMADIC_TEXTURE").get()));
+        planetEntity.add(new SpriteComponent((Texture) Resources.loadResource("PLANET_NOMADIC_TEXTURE").get()));
         return planetEntity;
     }
 

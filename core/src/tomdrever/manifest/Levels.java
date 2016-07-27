@@ -5,7 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.internal.LinkedTreeMap;
-import tomdrever.manifest.assets.Assets;
+import tomdrever.manifest.assets.Resources;
 import tomdrever.manifest.data.Level;
 import tomdrever.manifest.data.Planet;
 
@@ -21,7 +21,7 @@ public class Levels {
         Levels levels = new Levels();
 
         Gson gson = new GsonBuilder().create();
-        Level[] loadedLevels = gson.fromJson((String) Assets.getAsset("LEVELS_TEXT").get(), Level[].class);
+        Level[] loadedLevels = gson.fromJson((String) Resources.loadResource("LEVELS_TEXT").get(), Level[].class);
 
         Map<String, Level> loadedLevelsDict = new LinkedTreeMap<String, Level>() ;
         for (Level level: loadedLevels) {
@@ -38,6 +38,9 @@ public class Levels {
 
         Level level = levels.get(name);
 
+        // Padding is applied before and after each planet
+
+        // Calculate y positions (positions for each row)
         int yPlanetCount = level.planets.length;
         int yPadding = yPlanetCount == 1 ? 0 : 50 - (10 * yPlanetCount);
         int y = (Gdx.graphics.getHeight() / 2) +
@@ -45,6 +48,8 @@ public class Levels {
                     + ((yPlanetCount) * yPadding);
 
         for (Planet[] planetRow : level.planets) {
+
+            // Calculate x positions (positions for each planet in row)
             int xPlanetCount = planetRow.length;
             int xPadding = xPlanetCount == 1 ? 0 : 75 - (15 * xPlanetCount);
             int x = (Gdx.graphics.getWidth() / 2) -

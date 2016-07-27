@@ -7,7 +7,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import tomdrever.manifest.assets.Assets;
+import tomdrever.manifest.assets.Resources;
 import tomdrever.manifest.systems.ClickSystem;
 import tomdrever.manifest.systems.PopulationSystem;
 import tomdrever.manifest.systems.RenderingSystem;
@@ -25,7 +25,7 @@ public class ManifestGame extends ApplicationAdapter {
         spriteBatch = new SpriteBatch();
 
         // TODO - loading screen?
-        Assets.loadAssets();
+        Resources.loadAssets();
 
         RenderingSystem renderingSystem = new RenderingSystem(spriteBatch);
         engine.addSystem(renderingSystem);
@@ -46,7 +46,7 @@ public class ManifestGame extends ApplicationAdapter {
             engine.addEntity(entity);
         }
 
-        background = (Texture) Assets.getAsset("BACKGROUND_TEXTURE").get();
+        background = (Texture) Resources.loadResource("BACKGROUND_TEXTURE").get();
 
         // TODO - OVERVIEW - Planets (pop, selection), Fleets (creation, handling), UI (levels screen)
     }
@@ -64,7 +64,7 @@ public class ManifestGame extends ApplicationAdapter {
 
     @Override
     public void dispose() {
-        Assets.disposeOfAssets();
+        Resources.disposeOfResources();
         spriteBatch.dispose();
     }
 }

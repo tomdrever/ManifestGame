@@ -11,8 +11,8 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.HashMap;
 
-public class Assets{
-    private static HashMap<String, Resource> assets;
+public class Resources {
+    private static HashMap<String, Resource> resources;
 
     private static final HashMap<String, ResourceType> resourceTypes;
     static {
@@ -28,20 +28,19 @@ public class Assets{
     private enum ResourceType { TEXTURE, AUDIO, TEXT, FONT }
 
     public static void loadAssets() {
-        // Get all files in assets
+        // Get all files in resources
         // Load (based on type TODO - list types))
         // Texture, Font, JSON,
         // Store in dict: "$FILENAME" + "_" + type
         // e.g. "debug.png" -> "DEBUG_TEXTURE"
-        assets = new HashMap<String, Resource>();
+        resources = new HashMap<String, Resource>();
 
         // Get current directory (including lone files)
-        loadAssetsFromDirectory(Gdx.files.internal(".").toString());
+        loadResourceFromDirectory(Gdx.files.internal(".").toString());
     }
 
-    private static void loadAssetsFromDirectory(String directoryName) {
-        // get all files
-        // load
+    private static void loadResourceFromDirectory(String directoryName) {
+        // get all files & load
         File directory = new File(directoryName);
 
         // get all the files from a directory
@@ -51,19 +50,19 @@ public class Assets{
                 if (file.isFile()) {
                     // Load asset from each file
                     String fileType = Files.getFileExtension(file.getName());
-                    String resourceNameExtension = "";
+                    String resourceNameSuffix = "";
                     Resource resource = null;
-                    switch(resourceTypes.get(fileType)){
+                    switch (resourceTypes.get(fileType)) {
                         case TEXTURE:
-                            resourceNameExtension = "_TEXTURE";
+                            resourceNameSuffix = "_TEXTURE";
                             resource = new Resource<Texture>(new Texture(file.getPath()));
                             break;
                         case AUDIO:
-                            resourceNameExtension = "_AUDIO";
+                            resourceNameSuffix = "_AUDIO";
                             resource = new Resource<Sound>(Gdx.audio.newSound(Gdx.files.absolute(file.getPath())));
                             break;
                         case TEXT:
-                            resourceNameExtension = "_TEXT";
+                            resourceNameSuffix = "_TEXT";
                             byte[] encodedText = new byte[0];
                             try {
                                 encodedText = java.nio.file.Files.readAllBytes(Paths.get(file.getPath()));
@@ -73,33 +72,44 @@ public class Assets{
                             resource = new Resource<String>(new String(encodedText));
                             break;
                         case FONT:
-                            resourceNameExtension = "_FONT";
+                            resourceNameSuffix = "_FONT";
                             resource = new Resource<BitmapFont>(new BitmapFont(Gdx.files.absolute(file.getPath())));
                             break;
                     }
 
                     // If the filetype has a resource name extension attached to it...
-                    if (!(resourceNameExtension.isEmpty())) {
+                    if (!(resourceNameSuffix.isEmpty())) {
                         // Format resource name, removing file extension and adding type identifier.
-                        String resourceName = file.getName().replace("." + fileType, "").toUpperCase()
-                                + resourceNameExtension;
 
-                        assets.put(resourceName, resource);
+                        // Get the name of all files above, between this file and Gdx.files.internal(".").toString()
+                        File tempFileForIterating = file;
+                        String directoryPrefix = "";
+                        while (!tempFileForIterating.getParentFile().getName().equals(".")) {
+                            directoryPrefix += tempFileForIterating.getParentFile().getName().toUpperCase()
+                                    + "_";
+
+                            tempFileForIterating = tempFileForIterating.getParentFile();
+                        }
+
+                        String resourceName = directoryPrefix + file.getName().replace("." + fileType, "").toUpperCase()
+                                + resourceNameSuffix;
+
+                        resources.put(resourceName, resource);
                     }
                 } else if (file.isDirectory()) {
-                    // Load assets from sub dir
-                    loadAssetsFromDirectory(file.getAbsolutePath());
+                    // Load resources from sub dir
+                    loadResourceFromDirectory(file.getAbsolutePath());
                 }
             }
         }
     }
 
-    public static Resource getAsset(String assetName) {
-        Resource asset = assets.get(assetName);
+    public static Resource loadResource(String resourceName) {
+        Resource resource = resources.get(resourceName);
 
-        if (asset == null) {
+        if (resource == null) {
             try {
-                throw new Exception("Could not find asset with name: " + assetName);
+                throw new Exception("Could not find resource with name: " + resourceName);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -107,12 +117,12 @@ public class Assets{
             return null;
         }
         else {
-            return asset;
+            return resource;
         }
     }
 
-    public static void disposeOfAssets() {
-        for (Resource resource: assets.values()) {
+    public static void disposeOfResources() {
+        for (Resource resource: resources.values()) {
             resource.dispose();
         }
     }
