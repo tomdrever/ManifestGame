@@ -13,6 +13,9 @@ public class BoundsComponent implements Component {
     public void setPosition(float x, float y) {
         this.position = new Vector2(x - (this.size.x / 2), y - this.size.y / 2);
     }
+    public void setPosition(Vector2 position) {
+        this.position = position;
+    }
 
     private Vector2 size;
     public Vector2 getSize() {
@@ -20,6 +23,9 @@ public class BoundsComponent implements Component {
     }
     public void setSize(float width, float height) {
         this.size = new Vector2(width, height);
+    }
+    public void setSize(Vector2 size) {
+        this.size = size;
     }
 
     public BoundsComponent(float x, float y, float width, float height) {

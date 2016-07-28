@@ -8,10 +8,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import tomdrever.manifest.assets.Resources;
-import tomdrever.manifest.systems.ClickSystem;
-import tomdrever.manifest.systems.PopulationSystem;
-import tomdrever.manifest.systems.RenderingSystem;
-import tomdrever.manifest.systems.TextRenderingSystem;
+import tomdrever.manifest.systems.*;
 
 public class ManifestGame extends ApplicationAdapter {
 	private Engine engine;
@@ -27,6 +24,8 @@ public class ManifestGame extends ApplicationAdapter {
         // TODO - loading screen?
         Resources.loadAssets();
 
+        Planets.setEngine(engine);
+
         RenderingSystem renderingSystem = new RenderingSystem(spriteBatch);
         engine.addSystem(renderingSystem);
 
@@ -38,6 +37,9 @@ public class ManifestGame extends ApplicationAdapter {
 
         PopulationSystem popSystem = new PopulationSystem();
         engine.addSystem(popSystem);
+
+        LinearMovementSystem linearMovementSystem = new LinearMovementSystem();
+        engine.addSystem(linearMovementSystem);
 
         Levels levels = Levels.load();
 

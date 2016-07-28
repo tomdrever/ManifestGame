@@ -19,4 +19,25 @@ public class LinearMovementComponent implements Component {
     public void setSpeed(int speed) {
         this.speed = speed;
     }
+
+    private boolean hasBegunMoving;
+    public boolean getHasBegunMoving() {
+        return hasBegunMoving;
+    }
+    public void setHasBegunMoving(boolean hasBegunMoving) {
+        this.hasBegunMoving = hasBegunMoving;
+    }
+
+    private Vector2 offset;
+    public Vector2 getOffset() {
+        return offset;
+    }
+    public void setOffset(Vector2 offset) {
+        this.offset = offset;
+    }
+
+    public LinearMovementComponent(Vector2 destination, int speed) {
+        this.destination = destination;
+        this.speed = speed;
+    }
 }
