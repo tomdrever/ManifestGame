@@ -6,7 +6,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import tomdrever.manifest.components.BoundsComponent;
-import tomdrever.manifest.components.OnClick;
 import tomdrever.manifest.components.OnClickComponent;
 
 public class ClickSystem extends EntitySystem {
@@ -26,7 +25,7 @@ public class ClickSystem extends EntitySystem {
             if (onClickComponentMap.get(entity).isActive) {
                 // Invert libgdx y co-ord
                 if (entityBounds.contains(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY())) {
-                    final OnClick entityOnClickReaction = onClickComponentMap.get(entity).onClick;
+                    final OnClickComponent.OnClick entityOnClickReaction = onClickComponentMap.get(entity).onClick;
 
                     entityOnClickReaction.run(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
                 }

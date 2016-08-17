@@ -51,5 +51,18 @@ public class LinearMovementSystem extends IteratingSystem {
 
         BoundsComponent boundsComponent = boundsComponentMap.get(entity);
         boundsComponent.setPosition(currentPosition.x + offset.x, currentPosition.y + offset.y);
+
+        // Check if the entity has reached its destination
+
+        Vector2 pos = boundsComponent.getPosition();
+
+        if (Math.abs(pos.x - destination.x) <= 5 && Math.abs(pos.x - destination.x) <= 5 ) {
+            if (linearMovementComponentMap.get(entity).onDestinationReached != null) {
+                linearMovementComponentMap.get(entity).onDestinationReached.run();
+            }
+
+            entity.removeAll();
+            getEngine().removeEntity(entity);
+        }
     }
 }

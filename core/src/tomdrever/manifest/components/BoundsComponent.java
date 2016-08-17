@@ -7,6 +7,9 @@ import com.badlogic.gdx.math.Vector2;
 public class BoundsComponent implements Component {
     // Position represents centre of component
     private Vector2 position = new Vector2(0, 0);
+    public Vector2 getCenteredPosition() {
+        return new Vector2(position.x - (size.x / 2), position.y - (size.y / 2));
+    }
     public Vector2 getPosition() {
         return position;
     }

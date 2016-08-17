@@ -13,7 +13,7 @@ public class PopulationSystem extends IntervalIteratingSystem {
 
     public PopulationSystem() {
         // Interval - 1 1/2 secs
-        super(Family.all(PopulationComponent.class, TextComponent.class).get(), 1f);
+        super(Family.all(PopulationComponent.class, TextComponent.class).get(), 1.25f);
     }
 
     @Override

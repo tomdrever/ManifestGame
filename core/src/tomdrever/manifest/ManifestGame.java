@@ -53,7 +53,7 @@ public class ManifestGame extends ApplicationAdapter {
         addBackground();
 
         try {
-            Entity[] entities = levels.getLevel("Level 3");
+            Entity[] entities = levels.getLevel("Level 1");
 
             for (Entity entity:entities) {
                 engine.addEntity(entity);

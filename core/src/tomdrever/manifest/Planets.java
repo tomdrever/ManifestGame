@@ -2,8 +2,10 @@ package tomdrever.manifest;
 
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import tomdrever.manifest.assets.Resources;
 import tomdrever.manifest.components.*;
@@ -14,7 +16,7 @@ public class Planets {
 
     public static int planetSizeStandard = 100;
 
-    public static Entity selectedPlanet = null;
+    public static Entity selectedPlanetEntity = null;
 
     // REM - not actually a  planet type, returns a sort of planet-template, used in creating other
     // planet types
@@ -32,30 +34,43 @@ public class Planets {
         newEmptyPlanet.add(new TextComponent(popComponent.toString(),
                 (BitmapFont) Resources.loadResource("PLANET_POPULATION_FONT").get()));
 
-        newEmptyPlanet.add(new OnClickComponent(new OnClick() {
+        newEmptyPlanet.add(new OnClickComponent(new OnClickComponent.OnClick() {
             @Override
             public void run(Vector2 mousePosition){
-                System.out.println("planet clicked!");
                 // TODO - fully implement active planets, with selection toggle
 
                 // If there is no current selected planet...
-                if (selectedPlanet == null) {
+                if (selectedPlanetEntity == null) {
                     if (planet.type == Planet.Type.PLAYER) {
                         // TODO - Display fancy "selected" "aura"
-                        selectedPlanet = newEmptyPlanet;
+                        selectedPlanetEntity = newEmptyPlanet;
                     }
                 } else { // If there is a selected planet...
 
                     // If the player is clicking on the selected planet...
-                    if (selectedPlanet.getComponent(BoundsComponent.class).getBounds().contains(mousePosition)){
-                        // Deselect the selected planet.
-                        selectedPlanet = null;
-                    } else { // If the planet clicked is not selected...
-                        // Launch fleet at it!
-                        engine.addEntity(Fleets.newFleet(
-                                selectedPlanet.getComponent(BoundsComponent.class).getPosition(),
-                                mousePosition));
+                    Rectangle selectedPlanetBounds = selectedPlanetEntity.getComponent(BoundsComponent.class).getBounds();
 
+                    if (selectedPlanetBounds.contains(mousePosition)){
+                        // Deselect the selected planet.
+                        selectedPlanetEntity = null;
+                    } else { // If the planet clicked is not selected...
+
+                        if (selectedPlanetEntity.getComponent(PopulationComponent.class).population >= 2) {
+
+                            // Launch fleet at it!
+                            engine.addEntity(Fleets.newFleet(
+                                    Math.round(selectedPlanetEntity.getComponent(PopulationComponent.class).population) / 2,
+                                    selectedPlanetEntity.getComponent(BoundsComponent.class).getPosition(),
+                                    new Vector2(mousePosition.x, Gdx.graphics.getHeight() - mousePosition.y)));
+
+                            // Half planet's population, compensating for the interval timer's increases
+                            selectedPlanetEntity.getComponent(PopulationComponent.class).population =
+                                    (Math.round(selectedPlanetEntity.getComponent(PopulationComponent.class).population / 2)) - 1;
+
+                        }
+
+                        // Then deselect the selected planet
+                        selectedPlanetEntity = null;
                     }
                 }
             }
