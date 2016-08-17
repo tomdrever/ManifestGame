@@ -15,7 +15,7 @@ public class Fleets {
         Entity fleet = new Entity();
         fleet.add(new SpriteComponent((Texture) Resources.loadResource("DEBUG_FLEET_TEXTURE").get()));
         fleet.add(new BoundsComponent(position.x, position.y, 64, 64));
-        fleet.add(new LinearMovementComponent(destination, 5));
+        fleet.add(new LinearMovementComponent(destination, 3f));
         fleet.add(new RenderedComponent());
         return fleet;
     }

@@ -22,10 +22,10 @@ public class LinearMovementSystem extends IteratingSystem {
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
         Vector2 currentPosition = boundsComponentMap.get(entity).getPosition();
-        Vector2 destination = linearMovementComponentMap.get(entity).getDestination();
+        Vector2 destination = linearMovementComponentMap.get(entity).destination;
 
         // If the entity has just begun moving, first set up the rotation and movement offset
-        if (!linearMovementComponentMap.get(entity).getHasBegunMoving()) {
+        if (!linearMovementComponentMap.get(entity).hasBegunMoving) {
             // Calculate rotation
 
             // REM - Calculates angle, possibly incorrectly, TODO - return to later
@@ -35,18 +35,19 @@ public class LinearMovementSystem extends IteratingSystem {
             }
 
             spriteComponentMap.get(entity).sprite.rotate(angle);
-            linearMovementComponentMap.get(entity).setHasBegunMoving(true);
+            linearMovementComponentMap.get(entity).hasBegunMoving = true;
 
-            int speed = linearMovementComponentMap.get(entity).getSpeed();
+            float speedMultiplier = linearMovementComponentMap.get(entity).speedMultiplier;
 
-            Vector2 offset = new Vector2((destination.x - currentPosition.x) / (Gdx.graphics.getWidth() / 2),
-                    (destination.y - currentPosition.y) / (Gdx.graphics.getHeight() / 2));
+            Vector2 offset = new Vector2(
+                    ((destination.x - currentPosition.x) / (Gdx.graphics.getWidth() / 2)) * speedMultiplier,
+                    ((destination.y - currentPosition.y) / (Gdx.graphics.getHeight() / 2)) * speedMultiplier);
 
-            linearMovementComponentMap.get(entity).setOffset(offset);
+            linearMovementComponentMap.get(entity).offset = offset;
         }
 
         // Increase position by offset
-        Vector2 offset = linearMovementComponentMap.get(entity).getOffset();
+        Vector2 offset = linearMovementComponentMap.get(entity).offset;
 
         BoundsComponent boundsComponent = boundsComponentMap.get(entity);
         boundsComponent.setPosition(currentPosition.x + offset.x, currentPosition.y + offset.y);

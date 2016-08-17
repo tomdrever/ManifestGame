@@ -14,17 +14,17 @@ import tomdrever.manifest.components.SpriteComponent;
 import tomdrever.manifest.systems.*;
 
 public class ManifestGame extends ApplicationAdapter {
-	private Engine engine;
+	Engine engine;
     private SpriteBatch spriteBatch;
 
-    public static boolean paused = false;
+    boolean paused = false;
 	
 	@Override
 	public void create () {
 		engine = new Engine();
         spriteBatch = new SpriteBatch();
 
-        GameInput gameInput = new GameInput();
+        GameInputHandler gameInput = new GameInputHandler(this);
         Gdx.input.setInputProcessor(gameInput);
 
         // TODO - loading screen?
@@ -39,6 +39,7 @@ public class ManifestGame extends ApplicationAdapter {
         engine.addSystem(textRenderingSystem);
 
         ClickSystem clickSystem = new ClickSystem();
+        clickSystem.setProcessing(false);
         engine.addSystem(clickSystem);
 
         PopulationSystem popSystem = new PopulationSystem();
@@ -51,17 +52,25 @@ public class ManifestGame extends ApplicationAdapter {
 
         addBackground();
 
-        Entity[] entities = levels.getLevel("Level 3");
-        for (Entity entity:entities) {
-            engine.addEntity(entity);
+        try {
+            Entity[] entities = levels.getLevel("Level 3");
+
+            for (Entity entity:entities) {
+                engine.addEntity(entity);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Could not load level - no entities loaded");
         }
+
 
         // TODO - OVERVIEW - Planets (pop, selection), Fleets (creation, handling), UI (levels screen)
 
         // REM - LIBGDX DRAWS FROM BOTTOM-LEFT
     }
 
-    public void addBackground() {
+    private void addBackground() {
         Entity background = new Entity();
         background.add(new RenderedComponent())
                 .add(new BoundsComponent(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()))

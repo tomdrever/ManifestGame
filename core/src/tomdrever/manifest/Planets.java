@@ -2,7 +2,6 @@ package tomdrever.manifest;
 
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
@@ -35,20 +34,29 @@ public class Planets {
 
         newEmptyPlanet.add(new OnClickComponent(new OnClick() {
             @Override
-            public void run(){
+            public void run(Vector2 mousePosition){
                 System.out.println("planet clicked!");
                 // TODO - fully implement active planets, with selection toggle
 
+                // If there is no current selected planet...
                 if (selectedPlanet == null) {
                     if (planet.type == Planet.Type.PLAYER) {
                         // TODO - Display fancy "selected" "aura"
                         selectedPlanet = newEmptyPlanet;
                     }
-                }
-                else {
-                    engine.addEntity(Fleets.newFleet(
-                            selectedPlanet.getComponent(BoundsComponent.class).getPosition(),
-                            new Vector2(Gdx.input.getX(), Gdx.input.getY())));
+                } else { // If there is a selected planet...
+
+                    // If the player is clicking on the selected planet...
+                    if (selectedPlanet.getComponent(BoundsComponent.class).getBounds().contains(mousePosition)){
+                        // Deselect the selected planet.
+                        selectedPlanet = null;
+                    } else { // If the planet clicked is not selected...
+                        // Launch fleet at it!
+                        engine.addEntity(Fleets.newFleet(
+                                selectedPlanet.getComponent(BoundsComponent.class).getPosition(),
+                                mousePosition));
+
+                    }
                 }
             }
         }));

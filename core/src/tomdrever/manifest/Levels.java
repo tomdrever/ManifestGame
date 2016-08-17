@@ -33,10 +33,14 @@ public class Levels {
         return levels;
     }
 
-    public Entity[] getLevel(String name) {
+    public Entity[] getLevel(String name) throws Exception {
         ArrayList<Entity> entities = new ArrayList();
 
         Level level = levels.get(name);
+
+        if (level == null) {
+            throw new LevelNotFoundException(String.format("No level with name:  found", name));
+        }
 
         // Padding is applied before and after each planet
 
@@ -78,5 +82,11 @@ public class Levels {
 
     public int getLevelCount() {
         return levels.size();
+    }
+
+    private class LevelNotFoundException extends Exception {
+        LevelNotFoundException(String message) {
+            super(message);
+        }
     }
 }

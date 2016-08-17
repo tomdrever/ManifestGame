@@ -6,7 +6,8 @@ public class OnClickComponent implements Component {
     public OnClick onClick;
     public boolean isActive = true;
 
-    public int cooldown = 100;
+    // Compensate against looped mouse clicks
+    public int delay = 100;
 
     public OnClickComponent(OnClick onClick) {
         this.onClick = onClick;
