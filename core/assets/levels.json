@@ -58,7 +58,7 @@
           "maxPopulation": 20,
           "sizeMultiplier": 1,
           "growthRate": 1,
-          "type": "EMPTY"
+          "type": "PLAYER"
 		}, {
           "initialPopulation": 10,
           "maxPopulation": 20,

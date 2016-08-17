@@ -10,7 +10,7 @@ import tomdrever.manifest.components.RenderedComponent;
 import tomdrever.manifest.components.SpriteComponent;
 
 public class Fleets {
-    // TODO - factory for fleets
+
     public static Entity newFleet(Vector2 position, Vector2 destination) {
         Entity fleet = new Entity();
         fleet.add(new SpriteComponent((Texture) Resources.loadResource("DEBUG_FLEET_TEXTURE").get()));

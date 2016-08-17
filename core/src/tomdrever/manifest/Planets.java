@@ -2,6 +2,7 @@ package tomdrever.manifest;
 
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
@@ -12,11 +13,12 @@ import tomdrever.manifest.data.Planet;
 public class Planets {
     private static Engine engine;
 
-    public static int planetSize = 100;
+    public static int planetSizeStandard = 100;
 
     public static Entity selectedPlanet = null;
 
-    // REM - not actually a  planet type, returns a sort of planet-template
+    // REM - not actually a  planet type, returns a sort of planet-template, used in creating other
+    // planet types
     private static Entity newBasicPlanet(final Planet planet, final float x, final float y) {
         final Entity newEmptyPlanet = new Entity();
 
@@ -26,7 +28,7 @@ public class Planets {
                 planet.initialPopulation, planet.growthRate, planet.maxPopulation);
         newEmptyPlanet.add(popComponent);
 
-        newEmptyPlanet.add(new BoundsComponent(x, y, planetSize * planet.sizeMultiplier, planetSize * planet.sizeMultiplier));
+        newEmptyPlanet.add(new BoundsComponent(x, y, planetSizeStandard * planet.sizeMultiplier, planetSizeStandard * planet.sizeMultiplier));
 
         newEmptyPlanet.add(new TextComponent(popComponent.toString(),
                 (BitmapFont) Resources.loadResource("PLANET_POPULATION_FONT").get()));
@@ -35,16 +37,18 @@ public class Planets {
             @Override
             public void run(){
                 System.out.println("planet clicked!");
-                // TODO - fully implement clickable planets, with selection toggle
+                // TODO - fully implement active planets, with selection toggle
 
                 if (selectedPlanet == null) {
                     if (planet.type == Planet.Type.PLAYER) {
-                        // TODO - Display fancy "selected" aura
+                        // TODO - Display fancy "selected" "aura"
                         selectedPlanet = newEmptyPlanet;
                     }
                 }
                 else {
-                    engine.addEntity(Fleets.newFleet(selectedPlanet.getComponent(BoundsComponent.class).getPosition(), new Vector2(x, y)));
+                    engine.addEntity(Fleets.newFleet(
+                            selectedPlanet.getComponent(BoundsComponent.class).getPosition(),
+                            new Vector2(Gdx.input.getX(), Gdx.input.getY())));
                 }
             }
         }));

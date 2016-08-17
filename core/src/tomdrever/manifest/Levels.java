@@ -17,24 +17,24 @@ public class Levels {
 
     private Levels() { }
 
-    public static Levels load() {
+    public static Levels loadLevels() {
         Levels levels = new Levels();
 
         Gson gson = new GsonBuilder().create();
         Level[] loadedLevels = gson.fromJson((String) Resources.loadResource("LEVELS_TEXT").get(), Level[].class);
 
-        Map<String, Level> loadedLevelsDict = new LinkedTreeMap<String, Level>() ;
+        Map<String, Level> loadedLevelsDictionary = new LinkedTreeMap<String, Level>() ;
         for (Level level: loadedLevels) {
-            loadedLevelsDict.put(level.name, level);
+            loadedLevelsDictionary.put(level.name, level);
         }
 
-        levels.levels = loadedLevelsDict;
+        levels.levels = loadedLevelsDictionary;
 
         return levels;
     }
 
     public Entity[] getLevel(String name) {
-        ArrayList<Entity> entities = new ArrayList<Entity>();
+        ArrayList<Entity> entities = new ArrayList();
 
         Level level = levels.get(name);
 
@@ -44,7 +44,7 @@ public class Levels {
         int yPlanetCount = level.planets.length;
         int yPadding = yPlanetCount == 1 ? 0 : 50 - (10 * yPlanetCount);
         int y = (Gdx.graphics.getHeight() / 2) +
-                (((yPlanetCount - 1) * (Planets.planetSize)) / 2)
+                (((yPlanetCount - 1) * (Planets.planetSizeStandard)) / 2)
                     + ((yPlanetCount) * yPadding);
 
         for (Planet[] planetRow : level.planets) {
@@ -53,23 +53,24 @@ public class Levels {
             int xPlanetCount = planetRow.length;
             int xPadding = xPlanetCount == 1 ? 0 : 75 - (15 * xPlanetCount);
             int x = (Gdx.graphics.getWidth() / 2) -
-                    ((((xPlanetCount - 1) * (Planets.planetSize)) / 2)
+                    ((((xPlanetCount - 1) * (Planets.planetSizeStandard)) / 2)
                             + ((xPlanetCount) * xPadding));
 
             y -= yPadding;
 
             for (Planet planet: planetRow) {
                 x += xPadding;
-                // TODO - create some form of planet manager to assign and change planet types, (...)
-                // handle pop (and AI fleets?)
-                entities.add(Planets.newPlanetEntity(planet, x, y));
+
+                entities.add(Planets.newPlanetEntity(planet,
+                        x - ((Planets.planetSizeStandard * planet.sizeMultiplier) / 2),
+                        y- ((Planets.planetSizeStandard * planet.sizeMultiplier) / 2)));
 
                 x += xPadding;
-                x += Planets.planetSize;
+                x += Planets.planetSizeStandard;
             }
 
             y -= yPadding;
-            y -= Planets.planetSize;
+            y -= Planets.planetSizeStandard;
         }
 
         return entities.toArray(new Entity[]{});

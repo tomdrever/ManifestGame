@@ -29,10 +29,10 @@ public class Resources {
 
     public static void loadAssets() {
         // Get all files in resources
-        // Load (based on type TODO - list types))
         // Texture, Font, JSON,
         // Store in dict: "$FILENAME" + "_" + type
-        // e.g. "debug.png" -> "DEBUG_TEXTURE"
+        // e.g. "levels.json" -> "LEVELS_TEXT",
+        // "debug/fleet.png" -> "DEBUG_FLEET_TEXTURE"
         resources = new HashMap<String, Resource>();
 
         // Get current directory (including lone files)
@@ -40,7 +40,7 @@ public class Resources {
     }
 
     private static void loadResourceFromDirectory(String directoryName) {
-        // get all files & load
+        // get all files & loadLevels
         File directory = new File(directoryName);
 
         // get all the files from a directory

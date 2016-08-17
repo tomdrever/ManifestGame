@@ -21,20 +21,20 @@ public class ClickSystem extends IteratingSystem {
     @Override
     protected void processEntity(final Entity entity, float deltaTime) {
         Rectangle entityBounds = boundsComponentMap.get(entity).getBounds();
-        if (onClickComponentMap.get(entity).clickable) {
+        if (onClickComponentMap.get(entity).isActive) {
             if (Gdx.input.justTouched()) {
                 // Invert libgdx y co-ord
                 if (entityBounds.contains(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY())) {
-                    final OnClick entityOnClick = onClickComponentMap.get(entity).onClick;
-                    onClickComponentMap.get(entity).clickable = false;
+                    final OnClick entityOnClickReaction = onClickComponentMap.get(entity).onClick;
+                    onClickComponentMap.get(entity).isActive = false;
 
                     // Cooldown
                     new java.util.Timer().schedule(
                             new java.util.TimerTask() {
                                 @Override
                                 public void run() {
-                                    entityOnClick.run();
-                                    onClickComponentMap.get(entity).clickable = true;
+                                    entityOnClickReaction.run();
+                                    onClickComponentMap.get(entity).isActive = true;
                                 }
                             },
                             onClickComponentMap.get(entity).cooldown

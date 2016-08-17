@@ -28,9 +28,9 @@ public class LinearMovementSystem extends IteratingSystem {
         if (!linearMovementComponentMap.get(entity).getHasBegunMoving()) {
             // Calculate rotation
 
-            // REM - Calculates angle
+            // REM - Calculates angle, possibly incorrectly, TODO - return to later
             float angle = (float) Math.toDegrees(Math.atan2(destination.y - currentPosition.y, destination.x - currentPosition.x));
-            if(angle < 0){
+            if (angle < 0){
                 angle += 360;
             }
 

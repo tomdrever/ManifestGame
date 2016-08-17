@@ -4,7 +4,7 @@ import com.badlogic.ashley.core.Component;
 
 public class OnClickComponent implements Component {
     public OnClick onClick;
-    public boolean clickable = true;
+    public boolean isActive = true;
 
     public int cooldown = 100;
 
