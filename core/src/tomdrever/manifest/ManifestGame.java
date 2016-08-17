@@ -28,7 +28,7 @@ public class ManifestGame extends ApplicationAdapter {
         Gdx.input.setInputProcessor(gameInput);
 
         // TODO - loading screen?
-        Resources.loadAssets();
+        Resources.loadResources();
 
         Planets.setEngine(engine);
 
@@ -41,6 +41,10 @@ public class ManifestGame extends ApplicationAdapter {
         ClickSystem clickSystem = new ClickSystem();
         clickSystem.setProcessing(false);
         engine.addSystem(clickSystem);
+
+        HoverSystem hoverSystem = new HoverSystem();
+        hoverSystem.setProcessing(false);
+        engine.addSystem(hoverSystem);
 
         PopulationSystem popSystem = new PopulationSystem();
         engine.addSystem(popSystem);

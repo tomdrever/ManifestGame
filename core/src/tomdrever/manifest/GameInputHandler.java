@@ -3,6 +3,7 @@ package tomdrever.manifest;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import tomdrever.manifest.systems.ClickSystem;
+import tomdrever.manifest.systems.HoverSystem;
 
 public class GameInputHandler extends InputAdapter {
     private ManifestGame manifestGame;
@@ -25,5 +26,12 @@ public class GameInputHandler extends InputAdapter {
         manifestGame.engine.getSystem(ClickSystem.class).setProcessing(true);
 
         return super.touchUp(screenX, screenY, pointer, button);
+    }
+
+    @Override
+    public boolean mouseMoved(int screenX, int screenY) {
+        manifestGame.engine.getSystem(HoverSystem.class).setProcessing(true);
+
+        return super.mouseMoved(screenX, screenY);
     }
 }

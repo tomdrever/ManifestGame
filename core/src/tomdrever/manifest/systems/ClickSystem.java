@@ -25,9 +25,9 @@ public class ClickSystem extends EntitySystem {
             if (onClickComponentMap.get(entity).isActive) {
                 // Invert libgdx y co-ord
                 if (entityBounds.contains(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY())) {
-                    final OnClickComponent.OnClick entityOnClickReaction = onClickComponentMap.get(entity).onClick;
+                    final OnClickComponent.OnClick entityOnClick = onClickComponentMap.get(entity).onClick;
 
-                    entityOnClickReaction.run(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
+                    entityOnClick.run(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
                 }
             }
         }
@@ -36,37 +36,4 @@ public class ClickSystem extends EntitySystem {
         // stop processing
         setProcessing(false);
     }
-
-    // REM - using the new GameInputHandler, this system is set to process once, when a click (touch up)
-    // is detected. Below is the code from prior to this - REM - keep it just in case
-
-    /*
-    public ClickSystem() {
-        super(Family.all(OnClickComponent.class, BoundsComponent.class).get());
-    }
-
-    @Override
-    protected void processEntity(final Entity entity, float deltaTime) {
-        Rectangle entityBounds = boundsComponentMap.get(entity).getBounds();
-        if (onClickComponentMap.get(entity).isActive) {
-                // Invert libgdx y co-ord
-                if (entityBounds.contains(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY())) {
-                    final OnClick entityOnClickReaction = onClickComponentMap.get(entity).onClick;
-                    onClickComponentMap.get(entity).isActive = false;
-
-                    // Run after delay
-                    new java.util.Timer().schedule(
-                            new java.util.TimerTask() {
-                                @Override
-                                public void run() {
-                                    entityOnClickReaction.run();
-                                    onClickComponentMap.get(entity).isActive = true;
-                                }
-                            },
-                            onClickComponentMap.get(entity).delay
-                    );
-                }
-        }
-    }
-    */
 }

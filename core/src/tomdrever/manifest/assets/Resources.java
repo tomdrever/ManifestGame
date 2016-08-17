@@ -27,7 +27,7 @@ public class Resources {
 
     private enum ResourceType { TEXTURE, AUDIO, TEXT, FONT }
 
-    public static void loadAssets() {
+    public static void loadResources() {
         // Get all files in resources
         // Texture, Font, JSON,
         // Store in dict: "$FILENAME" + "_" + type

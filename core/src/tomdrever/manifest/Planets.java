@@ -14,6 +14,9 @@ import tomdrever.manifest.data.Planet;
 public class Planets {
     private static Engine engine;
 
+    private static Entity planetHighlightEntity;
+    private static Entity planetSelectedHighlightEntity;
+
     public static int planetSizeStandard = 100;
 
     public static Entity selectedPlanetEntity = null;
@@ -21,38 +24,75 @@ public class Planets {
     // REM - not actually a  planet type, returns a sort of planet-template, used in creating other
     // planet types
     private static Entity newBasicPlanet(final Planet planet, final float x, final float y) {
-        final Entity newEmptyPlanet = new Entity();
+        final Entity newPlanetEntity = new Entity();
 
-        newEmptyPlanet.add(new RenderedComponent());
+        newPlanetEntity.add(new RenderedComponent());
 
         PopulationComponent popComponent = new PopulationComponent(
                 planet.initialPopulation, planet.growthRate, planet.maxPopulation);
-        newEmptyPlanet.add(popComponent);
+        newPlanetEntity.add(popComponent);
 
-        newEmptyPlanet.add(new BoundsComponent(x, y, planetSizeStandard * planet.sizeMultiplier, planetSizeStandard * planet.sizeMultiplier));
+        newPlanetEntity.add(new BoundsComponent(x, y, planetSizeStandard * planet.sizeMultiplier, planetSizeStandard * planet.sizeMultiplier));
 
-        newEmptyPlanet.add(new TextComponent(popComponent.toString(),
+        newPlanetEntity.add(new TextComponent(popComponent.toString(),
                 (BitmapFont) Resources.loadResource("PLANET_POPULATION_FONT").get()));
 
-        newEmptyPlanet.add(new OnClickComponent(new OnClickComponent.OnClick() {
+        newPlanetEntity.add(new OnHoverComponent(new OnHoverComponent.OnHover() {
             @Override
-            public void run(Vector2 mousePosition){
-                // TODO - fully implement active planets, with selection toggle
+            public void onMouseEnter() {
+
+                if (planet.type == Planet.Type.PLAYER) {
+                    planetHighlightEntity.add(new SpriteComponent(
+                            (Texture) Resources.loadResource("PLANET_SELECT_HIGHLIGHT_TEXTURE").get()));
+                } else if (selectedPlanetEntity != null){
+                    planetHighlightEntity.add(new SpriteComponent(
+                            (Texture) Resources.loadResource("PLANET_TARGET_HIGHLIGHT_TEXTURE").get()));
+                }
+
+                planetHighlightEntity.add(new BoundsComponent(
+                                x, y,
+                                planetSizeStandard * planet.sizeMultiplier, planetSizeStandard * planet.sizeMultiplier));
+
+                planetHighlightEntity.add(new RenderedComponent());
+            }
+
+            @Override
+            public void onMouseExit() {
+                planetHighlightEntity.removeAll();
+            }
+        }));
+
+        newPlanetEntity.add(new OnClickComponent(new OnClickComponent.OnClick() {
+            @Override
+            public void run(Vector2 mousePosition) {
 
                 // If there is no current selected planet...
                 if (selectedPlanetEntity == null) {
                     if (planet.type == Planet.Type.PLAYER) {
-                        // TODO - Display fancy "selected" "aura"
-                        selectedPlanetEntity = newEmptyPlanet;
+                        // Select planet
+                        selectedPlanetEntity = newPlanetEntity;
+
+                        // Show selection highlight
+                        planetSelectedHighlightEntity.add(new RenderedComponent());
+                        planetSelectedHighlightEntity.add(new SpriteComponent(
+                                (Texture) Resources.loadResource("PLANET_SELECT_HIGHLIGHT_TEXTURE").get()
+                        ));
+                        Rectangle planetBounds = newPlanetEntity.getComponent(BoundsComponent.class).getBounds();
+                        planetSelectedHighlightEntity.add(new BoundsComponent(
+                                planetBounds.x, planetBounds.y,
+                                planetBounds.width, planetBounds.height));
                     }
                 } else { // If there is a selected planet...
 
                     // If the player is clicking on the selected planet...
-                    Rectangle selectedPlanetBounds = selectedPlanetEntity.getComponent(BoundsComponent.class).getBounds();
+                    if (selectedPlanetEntity == newPlanetEntity) {
+                        // Hide selection highlight
+                        planetSelectedHighlightEntity.removeAll();
+                        planetHighlightEntity.removeAll();
 
-                    if (selectedPlanetBounds.contains(mousePosition)){
                         // Deselect the selected planet.
                         selectedPlanetEntity = null;
+
                     } else { // If the planet clicked is not selected...
 
                         if (selectedPlanetEntity.getComponent(PopulationComponent.class).population >= 2) {
@@ -69,6 +109,10 @@ public class Planets {
 
                         }
 
+                        // Hide selection highlight
+                        planetSelectedHighlightEntity.removeAll();
+                        planetHighlightEntity.removeAll();
+
                         // Then deselect the selected planet
                         selectedPlanetEntity = null;
                     }
@@ -76,7 +120,7 @@ public class Planets {
             }
         }));
 
-        return newEmptyPlanet;
+        return newPlanetEntity;
     }
 
     private static Entity newEmptyPlanet(Planet planet, float x, float y) {
@@ -128,5 +172,11 @@ public class Planets {
 
     public static void setEngine(Engine engine1) {
         engine = engine1;
+
+        planetHighlightEntity = new Entity();
+        engine.addEntity(planetHighlightEntity);
+
+        planetSelectedHighlightEntity = new Entity();
+        engine.addEntity(planetSelectedHighlightEntity);
     }
 }
