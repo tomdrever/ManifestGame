@@ -9,11 +9,11 @@ import tomdrever.manifest.components.LinearMovementComponent;
 import tomdrever.manifest.components.RenderedComponent;
 import tomdrever.manifest.components.SpriteComponent;
 
-public class Fleets {
+class Fleets {
 
-    public final static int fleetSizeStandard = 64;
+    private final static int fleetSizeStandard = 64;
 
-    public static Entity newFleet(final int fleetCapacity, Vector2 position, Vector2 destination) {
+    static Entity newFleet(final int fleetCapacity, Vector2 position, Vector2 destination) {
         Entity fleet = new Entity();
         // TODO - Change the texture and size of the fleet based off of its population
         fleet.add(new SpriteComponent((Texture) Resources.loadResource("DEBUG_FLEET_TEXTURE").get()));

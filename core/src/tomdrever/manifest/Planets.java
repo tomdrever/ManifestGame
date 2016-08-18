@@ -11,15 +11,15 @@ import tomdrever.manifest.assets.Resources;
 import tomdrever.manifest.components.*;
 import tomdrever.manifest.data.Planet;
 
-public class Planets {
+class Planets {
     private static Engine engine;
 
     private static Entity planetHighlightEntity;
     private static Entity planetSelectedHighlightEntity;
 
-    public static int planetSizeStandard = 100;
+    static int planetSizeStandard = 100;
 
-    public static Entity selectedPlanetEntity = null;
+    private static Entity selectedPlanetEntity = null;
 
     // REM - not actually a  planet type, returns a sort of planet-template, used in creating other
     // planet types
@@ -32,7 +32,8 @@ public class Planets {
                 planet.initialPopulation, planet.growthRate, planet.maxPopulation);
         newPlanetEntity.add(popComponent);
 
-        newPlanetEntity.add(new BoundsComponent(x, y, planetSizeStandard * planet.sizeMultiplier, planetSizeStandard * planet.sizeMultiplier));
+        newPlanetEntity.add(new BoundsComponent(x, y,
+                planetSizeStandard * planet.sizeMultiplier, planetSizeStandard * planet.sizeMultiplier));
 
         newPlanetEntity.add(new TextComponent(popComponent.toString(),
                 (BitmapFont) Resources.loadResource("PLANET_POPULATION_FONT").get()));
@@ -153,7 +154,7 @@ public class Planets {
         return planetEntity;
     }
 
-    public static Entity newPlanetEntity(Planet planet, float x, float y) {
+    static Entity newPlanetEntity(Planet planet, float x, float y) {
         switch (planet.type) {
             case EMPTY:
                 return newEmptyPlanet(planet, x, y);
@@ -170,7 +171,7 @@ public class Planets {
         }
     }
 
-    public static void setEngine(Engine engine1) {
+    static void setEngine(Engine engine1) {
         engine = engine1;
 
         planetHighlightEntity = new Entity();

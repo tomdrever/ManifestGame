@@ -6,6 +6,7 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import tomdrever.manifest.components.BoundsComponent;
 import tomdrever.manifest.components.RenderedComponent;
@@ -29,11 +30,17 @@ public class RenderingSystem extends IteratingSystem {
             Vector2 entityPosition = boundsComponentMap.get(entity).getPosition();
             Vector2 entitySize = boundsComponentMap.get(entity).getSize();
 
-            spriteBatch.draw(entitySprite.getTexture(),
+            TextureRegion region = new TextureRegion(entitySprite.getTexture(), entitySprite.getTexture().getWidth(), entitySprite.getTexture().getHeight());
+
+            spriteBatch.draw(region,
                     entityPosition.x,
                     entityPosition.y,
+                    entitySize.x / 2,
+                    entitySize.y / 2,
                     entitySize.x,
-                    entitySize.y);
+                    entitySize.y,
+                    1, 1,
+                    entitySprite.getRotation(), false);
         }
     }
 }

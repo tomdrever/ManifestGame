@@ -7,11 +7,11 @@ import com.badlogic.ashley.systems.IntervalIteratingSystem;
 import tomdrever.manifest.components.PopulationComponent;
 import tomdrever.manifest.components.TextComponent;
 
-public class PopulationSystem extends IntervalIteratingSystem {
+public class PopulationDisplaySystem extends IntervalIteratingSystem {
     private ComponentMapper<PopulationComponent> populationComponentMap = ComponentMapper.getFor(PopulationComponent.class);
     private ComponentMapper<TextComponent> textComponentMap = ComponentMapper.getFor(TextComponent.class);
 
-    public PopulationSystem() {
+    public PopulationDisplaySystem() {
         // Interval - 1 1/2 secs
         super(Family.all(PopulationComponent.class, TextComponent.class).get(), 1.25f);
     }

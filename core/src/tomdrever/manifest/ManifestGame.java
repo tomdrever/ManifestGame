@@ -46,7 +46,7 @@ public class ManifestGame extends ApplicationAdapter {
         hoverSystem.setProcessing(false);
         engine.addSystem(hoverSystem);
 
-        PopulationSystem popSystem = new PopulationSystem();
+        PopulationDisplaySystem popSystem = new PopulationDisplaySystem();
         engine.addSystem(popSystem);
 
         LinearMovementSystem linearMovementSystem = new LinearMovementSystem();

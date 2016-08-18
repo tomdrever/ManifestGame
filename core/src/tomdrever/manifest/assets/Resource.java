@@ -4,7 +4,7 @@ import com.badlogic.gdx.utils.Disposable;
 
 public class Resource <T> implements Disposable{
     private T resource;
-    public Resource(T resource) {
+    Resource(T resource) {
         this.resource = resource;
     }
 

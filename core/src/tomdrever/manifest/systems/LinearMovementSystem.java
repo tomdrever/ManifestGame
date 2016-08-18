@@ -5,6 +5,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import tomdrever.manifest.components.BoundsComponent;
 import tomdrever.manifest.components.LinearMovementComponent;
@@ -28,13 +29,17 @@ public class LinearMovementSystem extends IteratingSystem {
         if (!linearMovementComponentMap.get(entity).hasBegunMoving) {
             // Calculate rotation
 
+            Sprite sprite = spriteComponentMap.get(entity).sprite;
+
             // REM - Calculates angle, possibly incorrectly, TODO - return to later
             float angle = (float) Math.toDegrees(Math.atan2(destination.y - currentPosition.y, destination.x - currentPosition.x));
             if (angle < 0){
                 angle += 360;
             }
+            sprite.setOrigin(boundsComponentMap.get(entity).getBounds().width / 2, boundsComponentMap.get(entity).getBounds().height / 2);
 
-            spriteComponentMap.get(entity).sprite.rotate(angle);
+            sprite.rotate(angle);
+
             linearMovementComponentMap.get(entity).hasBegunMoving = true;
 
             float speedMultiplier = linearMovementComponentMap.get(entity).speedMultiplier;
