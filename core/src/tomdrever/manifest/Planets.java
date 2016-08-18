@@ -45,9 +45,18 @@ class Planets {
                 if (planet.type == Planet.Type.PLAYER) {
                     planetHighlightEntity.add(new SpriteComponent(
                             (Texture) Resources.loadResource("PLANET_SELECT_HIGHLIGHT_TEXTURE").get()));
-                } else if (selectedPlanetEntity != null){
-                    planetHighlightEntity.add(new SpriteComponent(
-                            (Texture) Resources.loadResource("PLANET_TARGET_HIGHLIGHT_TEXTURE").get()));
+                }
+                if (selectedPlanetEntity != null){
+                    if (planet.type == Planet.Type.PLAYER) {
+                        if (newPlanetEntity != selectedPlanetEntity) {
+                            planetHighlightEntity.add(new SpriteComponent(
+                                    (Texture) Resources.loadResource("PLANET_TARGET_PLAYER_HIGHLIGHT_TEXTURE").get()));
+                        }
+                    }
+                    else {
+                        planetHighlightEntity.add(new SpriteComponent(
+                                (Texture) Resources.loadResource("PLANET_TARGET_HIGHLIGHT_TEXTURE").get()));
+                    }
                 }
 
                 planetHighlightEntity.add(new BoundsComponent(

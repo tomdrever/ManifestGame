@@ -31,12 +31,10 @@ public class LinearMovementSystem extends IteratingSystem {
 
             Sprite sprite = spriteComponentMap.get(entity).sprite;
 
-            // REM - Calculates angle, possibly incorrectly, TODO - return to later
             float angle = (float) Math.toDegrees(Math.atan2(destination.y - currentPosition.y, destination.x - currentPosition.x));
             if (angle < 0){
                 angle += 360;
             }
-            sprite.setOrigin(boundsComponentMap.get(entity).getBounds().width / 2, boundsComponentMap.get(entity).getBounds().height / 2);
 
             sprite.rotate(angle);
 

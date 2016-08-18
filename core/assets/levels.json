@@ -35,7 +35,14 @@
           "sizeMultiplier": 1,
           "growthRate": 1,
           "type": "PLAYER"
-        }]
+        }], [
+         {
+        "initialPopulation": 16,
+        "maxPopulation": 32,
+        "sizeMultiplier": 1,
+        "growthRate": 1,
+        "type": "PLAYER"}
+      ]
 	]
 }, {
 	"name": "Level 2",
