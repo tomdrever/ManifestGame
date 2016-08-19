@@ -118,7 +118,7 @@ class Planets {
                             engine.addEntity(Fleets.newFleet(
                                     Math.round(selectedPlanetEntity.getComponent(PopulationComponent.class).population) / 2,
                                     selectedPlanetEntity.getComponent(BoundsComponent.class).getPosition(),
-                                    new Vector2(mousePosition.x, Gdx.graphics.getHeight() - mousePosition.y)));
+                                    new Vector2(mousePosition.x, Gdx.graphics.getHeight() -  mousePosition.y)));
 
                             // Half planet's population, compensating for the interval timer's increases
                             selectedPlanetEntity.getComponent(PopulationComponent.class).population =

@@ -23,14 +23,18 @@ public class GameInputHandler extends InputAdapter {
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        manifestGame.engine.getSystem(ClickSystem.class).setProcessing(true);
+        if (!manifestGame.paused) {
+            manifestGame.engine.getSystem(ClickSystem.class).setProcessing(true);
+        }
 
         return super.touchUp(screenX, screenY, pointer, button);
     }
 
     @Override
     public boolean mouseMoved(int screenX, int screenY) {
-        manifestGame.engine.getSystem(HoverSystem.class).setProcessing(true);
+        if (!manifestGame.paused) {
+            manifestGame.engine.getSystem(HoverSystem.class).setProcessing(true);
+        }
 
         return super.mouseMoved(screenX, screenY);
     }

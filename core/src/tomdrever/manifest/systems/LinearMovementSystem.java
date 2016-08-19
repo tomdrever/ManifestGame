@@ -4,7 +4,6 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import tomdrever.manifest.components.BoundsComponent;
@@ -24,7 +23,7 @@ public class LinearMovementSystem extends IteratingSystem {
     protected void processEntity(Entity entity, float deltaTime) {
         // FIXME - Calc dest correctly, make sure fleet moves towards the right point.
 
-        Vector2 currentPosition = boundsComponentMap.get(entity).getPosition();
+        Vector2 initialPosition = boundsComponentMap.get(entity).getPosition();
         Vector2 destination = linearMovementComponentMap.get(entity).destination;
 
         // If the entity has just begun moving, first set up the rotation and movement offset
@@ -33,7 +32,7 @@ public class LinearMovementSystem extends IteratingSystem {
 
             Sprite sprite = spriteComponentMap.get(entity).sprite;
 
-            float angle = (float) Math.toDegrees(Math.atan2(destination.y - currentPosition.y, destination.x - currentPosition.x));
+            float angle = (float) Math.toDegrees(Math.atan2(destination.y - initialPosition.y, destination.x - initialPosition.x));
             if (angle < 0){
                 angle += 360;
             }
@@ -44,28 +43,27 @@ public class LinearMovementSystem extends IteratingSystem {
 
             float speedMultiplier = linearMovementComponentMap.get(entity).speedMultiplier;
 
-            Vector2 offset = new Vector2(
-                    ((destination.x - currentPosition.x) / (Gdx.graphics.getWidth() / 2)) * speedMultiplier,
-                    ((destination.y - currentPosition.y) / (Gdx.graphics.getHeight() / 2)) * speedMultiplier);
-
-            linearMovementComponentMap.get(entity).offset = offset;
+            // REM - do not touch the math. It will not like it. You have been warned.
+            linearMovementComponentMap.get(entity).offset = new Vector2(destination.x - initialPosition.x, destination.y - initialPosition.y).nor().scl(Math.min(initialPosition.dst(destination.x, destination.y), speedMultiplier));
         }
 
         // Increase position by offset
         Vector2 offset = linearMovementComponentMap.get(entity).offset;
 
         BoundsComponent boundsComponent = boundsComponentMap.get(entity);
-        boundsComponent.setPosition(currentPosition.x + offset.x, currentPosition.y + offset.y);
+        boundsComponent.setPosition(initialPosition.x + offset.x, initialPosition.y + offset.y);
 
         // Check if the entity has reached its destination
 
-        Vector2 pos = boundsComponent.getPosition();
+        Vector2 updatedPosition = boundsComponent.getPosition();
 
         // FIXME - Destination reached is occasionally run early
-        if (Math.abs(pos.x - destination.x) <= 5 && Math.abs(pos.x - destination.x) <= 5 ) {
+        if (Math.abs(updatedPosition.x - destination.x) <= 10 && Math.abs(updatedPosition.y - destination.y) <= 10 ) {
             if (linearMovementComponentMap.get(entity).onDestinationReached != null) {
                 linearMovementComponentMap.get(entity).onDestinationReached.run();
             }
+
+            System.out.println(String.format("Fleet reached destination at: %f, %f", updatedPosition.x, updatedPosition.y));
 
             entity.removeAll();
             getEngine().removeEntity(entity);

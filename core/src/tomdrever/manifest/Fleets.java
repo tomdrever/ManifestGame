@@ -27,6 +27,9 @@ class Fleets {
                         // TODO - Calculate targeted planet's losses, based off of fleet size
                     }
             }));
+
+        System.out.println(String.format("Fleet launched with destination: %f, %f", destination.x, destination.y));
+
         fleet.add(new RenderedComponent());
         return fleet;
     }
