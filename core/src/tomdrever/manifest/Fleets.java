@@ -24,7 +24,7 @@ class Fleets {
                     @Override
                     public void run() {
                         System.out.println(String.format("Fleet sized: %d landed!", fleetCapacity));
-                        // TODO - Get fleet size,
+                        // TODO - Calculate targeted planet's losses, based off of fleet size
                     }
             }));
         fleet.add(new RenderedComponent());

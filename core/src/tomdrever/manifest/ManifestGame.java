@@ -69,7 +69,7 @@ public class ManifestGame extends ApplicationAdapter {
         }
 
 
-        // TODO - OVERVIEW - Planets (pop, selection), Fleets (creation, handling), UI (levels screen)
+        // TODO - OVERVIEW - Fleets (handling landing fleets, fleet graphics), UI (levels screen)
 
         // REM - LIBGDX DRAWS FROM BOTTOM-LEFT
     }

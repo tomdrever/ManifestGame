@@ -22,6 +22,8 @@ public class LinearMovementSystem extends IteratingSystem {
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
+        // FIXME - Calc dest correctly, make sure fleet moves towards the right point.
+
         Vector2 currentPosition = boundsComponentMap.get(entity).getPosition();
         Vector2 destination = linearMovementComponentMap.get(entity).destination;
 
@@ -59,6 +61,7 @@ public class LinearMovementSystem extends IteratingSystem {
 
         Vector2 pos = boundsComponent.getPosition();
 
+        // FIXME - Destination reached is occasionally run early
         if (Math.abs(pos.x - destination.x) <= 5 && Math.abs(pos.x - destination.x) <= 5 ) {
             if (linearMovementComponentMap.get(entity).onDestinationReached != null) {
                 linearMovementComponentMap.get(entity).onDestinationReached.run();

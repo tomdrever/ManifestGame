@@ -42,20 +42,27 @@ class Planets {
             @Override
             public void onMouseEnter() {
 
-                if (planet.type == Planet.Type.PLAYER) {
-                    planetHighlightEntity.add(new SpriteComponent(
-                            (Texture) Resources.loadResource("PLANET_SELECT_HIGHLIGHT_TEXTURE").get()));
-                }
-                if (selectedPlanetEntity != null){
+                // If there is a selected planet...
+                if (selectedPlanetEntity != null) {
+                    // If the player is hovering over an owned planet...
                     if (planet.type == Planet.Type.PLAYER) {
-                        if (newPlanetEntity != selectedPlanetEntity) {
+                        // Which is NOT the selected planet...
+                        if (selectedPlanetEntity != newPlanetEntity) {
+                            // Show green aura
                             planetHighlightEntity.add(new SpriteComponent(
                                     (Texture) Resources.loadResource("PLANET_TARGET_PLAYER_HIGHLIGHT_TEXTURE").get()));
                         }
-                    }
-                    else {
+                    } else { // If the player is hovering over an alien planet...
+                        // The aura is red
                         planetHighlightEntity.add(new SpriteComponent(
                                 (Texture) Resources.loadResource("PLANET_TARGET_HIGHLIGHT_TEXTURE").get()));
+                    }
+                } else { // If there is not a selected planet...
+                    // And the player is hovering over an owned planet...
+                    if (planet.type == Planet.Type.PLAYER) {
+                        // Show white aura
+                        planetHighlightEntity.add(new SpriteComponent(
+                                (Texture) Resources.loadResource("PLANET_SELECT_HIGHLIGHT_TEXTURE").get()));
                     }
                 }
 
