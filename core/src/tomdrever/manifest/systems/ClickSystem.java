@@ -22,10 +22,10 @@ public class ClickSystem extends EntitySystem {
         for (int i = 0; i < entities.size(); ++i) {
             final Entity entity = entities.get(i);
             Rectangle entityBounds = boundsComponentMap.get(entity).getBounds();
-            if (onClickComponentMap.get(entity).isActive) {
+            if (onClickComponentMap.get(entity).isActive()) {
                 // Invert libgdx y co-ord
                 if (entityBounds.contains(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY())) {
-                    final OnClickComponent.OnClick entityOnClick = onClickComponentMap.get(entity).onClick;
+                    final OnClickComponent.OnClick entityOnClick = onClickComponentMap.get(entity).getOnClick();
 
                     entityOnClick.run(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
                 }

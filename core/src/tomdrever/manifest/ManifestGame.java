@@ -27,7 +27,7 @@ public class ManifestGame extends ApplicationAdapter {
         GameInputHandler gameInput = new GameInputHandler(this);
         Gdx.input.setInputProcessor(gameInput);
 
-        // TODO - loading screen?
+        // TODO - loading/splash screen?
         Resources.loadResources();
 
         Planets.setEngine(engine);
@@ -76,16 +76,17 @@ public class ManifestGame extends ApplicationAdapter {
 
     private void addBackground() {
         Entity background = new Entity();
+
         background.add(new RenderedComponent())
                 .add(new BoundsComponent(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()))
                 .add(new SpriteComponent((Texture) Resources.loadResource("BACKGROUND_TEXTURE").get()));
+
         engine.addEntity(background);
     }
 
     @Override
     public void render() {
         if (!paused) {
-            Gdx.gl.glClearColor(1, 0, 0, 1);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
             spriteBatch.begin();

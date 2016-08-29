@@ -21,46 +21,42 @@ public class LinearMovementSystem extends IteratingSystem {
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        // FIXME - Calc dest correctly, make sure fleet moves towards the right point.
-
         Vector2 initialPosition = boundsComponentMap.get(entity).getPosition();
-        Vector2 destination = linearMovementComponentMap.get(entity).destination;
+        Vector2 destination = linearMovementComponentMap.get(entity).getDestination();
 
         // If the entity has just begun moving, first set up the rotation and movement offset
-        if (!linearMovementComponentMap.get(entity).hasBegunMoving) {
+        if (!linearMovementComponentMap.get(entity).getHasBegunMoving()) {
             // Calculate rotation
 
-            Sprite sprite = spriteComponentMap.get(entity).sprite;
+            Sprite sprite = spriteComponentMap.get(entity).getSprite();
 
             float angle = (float) Math.toDegrees(Math.atan2(destination.y - initialPosition.y, destination.x - initialPosition.x));
-            if (angle < 0){
+            if (angle < 0) {
                 angle += 360;
             }
 
             sprite.rotate(angle);
 
-            linearMovementComponentMap.get(entity).hasBegunMoving = true;
+            linearMovementComponentMap.get(entity).setHasBegunMoving(true);
 
-            float speedMultiplier = linearMovementComponentMap.get(entity).speedMultiplier;
+            float speedMultiplier = linearMovementComponentMap.get(entity).getSpeedMultiplier();
 
             // REM - do not touch the math. It will not like it. You have been warned.
-            linearMovementComponentMap.get(entity).offset = new Vector2(destination.x - initialPosition.x, destination.y - initialPosition.y).nor().scl(Math.min(initialPosition.dst(destination.x, destination.y), speedMultiplier));
+            linearMovementComponentMap.get(entity).setOffset(new Vector2(destination.x - initialPosition.x, destination.y - initialPosition.y).nor().scl(Math.min(initialPosition.dst(destination.x, destination.y), speedMultiplier)));
         }
 
         // Increase position by offset
-        Vector2 offset = linearMovementComponentMap.get(entity).offset;
+        Vector2 offset = linearMovementComponentMap.get(entity).getOffset();
 
         BoundsComponent boundsComponent = boundsComponentMap.get(entity);
         boundsComponent.setPosition(initialPosition.x + offset.x, initialPosition.y + offset.y);
 
         // Check if the entity has reached its destination
-
         Vector2 updatedPosition = boundsComponent.getPosition();
 
-        // FIXME - Destination reached is occasionally run early
         if (Math.abs(updatedPosition.x - destination.x) <= 10 && Math.abs(updatedPosition.y - destination.y) <= 10 ) {
-            if (linearMovementComponentMap.get(entity).onDestinationReached != null) {
-                linearMovementComponentMap.get(entity).onDestinationReached.run();
+            if (linearMovementComponentMap.get(entity).getOnDestinationReached() != null) {
+                linearMovementComponentMap.get(entity).getOnDestinationReached().run();
             }
 
             System.out.println(String.format("Fleet reached destination at: %f, %f", updatedPosition.x, updatedPosition.y));

@@ -26,17 +26,17 @@ public class TextRenderingSystem extends IteratingSystem {
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        BitmapFont entityFont = textComponentMap.get(entity).font;
-        String entityText = textComponentMap.get(entity).text;
+        BitmapFont entityFont = textComponentMap.get(entity).getFont();
+        String entityText = textComponentMap.get(entity).getText();
 
         Vector2 entityPosition = boundsComponentMap.get(entity).getPosition();
         Vector2 entitySize = boundsComponentMap.get(entity).getSize();
 
-        // Calculate centered position and draw
+        // Calculate centered position of text and draw
         glyphLayout.setText(entityFont, entityText);
         entityFont.draw(spriteBatch, entityText,
                 (entityPosition.x + (entitySize.x / 2)) - (glyphLayout.width / 2),
-                // Inverted screen co-ords, keep as +
+                // Inverted screen co-ords, REM - keep as +
                 (entityPosition.y + (entitySize.y / 2)) + (glyphLayout.height / 2));
     }
 }

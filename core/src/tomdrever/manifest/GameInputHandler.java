@@ -5,10 +5,10 @@ import com.badlogic.gdx.InputAdapter;
 import tomdrever.manifest.systems.ClickSystem;
 import tomdrever.manifest.systems.HoverSystem;
 
-public class GameInputHandler extends InputAdapter {
+class GameInputHandler extends InputAdapter {
     private ManifestGame manifestGame;
 
-    public GameInputHandler(ManifestGame manifestGame) {
+    GameInputHandler(ManifestGame manifestGame) {
         this.manifestGame = manifestGame;
     }
 
@@ -18,7 +18,7 @@ public class GameInputHandler extends InputAdapter {
             manifestGame.paused = !manifestGame.paused;
         }
 
-        return super.keyUp(keycode);
+        return true;
     }
 
     @Override
@@ -27,7 +27,7 @@ public class GameInputHandler extends InputAdapter {
             manifestGame.engine.getSystem(ClickSystem.class).setProcessing(true);
         }
 
-        return super.touchUp(screenX, screenY, pointer, button);
+        return true;
     }
 
     @Override
@@ -36,6 +36,6 @@ public class GameInputHandler extends InputAdapter {
             manifestGame.engine.getSystem(HoverSystem.class).setProcessing(true);
         }
 
-        return super.mouseMoved(screenX, screenY);
+        return true;
     }
 }

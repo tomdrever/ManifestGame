@@ -29,11 +29,11 @@ class Planets {
         newPlanetEntity.add(new RenderedComponent());
 
         PopulationComponent popComponent = new PopulationComponent(
-                planet.initialPopulation, planet.growthRate, planet.maxPopulation);
+                planet.getInitialPopulation(), planet.getGrowthRate(), planet.getMaxPopulation());
         newPlanetEntity.add(popComponent);
 
         newPlanetEntity.add(new BoundsComponent(x, y,
-                planetSizeStandard * planet.sizeMultiplier, planetSizeStandard * planet.sizeMultiplier));
+                planetSizeStandard * planet.getSizeMultiplier(), planetSizeStandard * planet.getSizeMultiplier()));
 
         newPlanetEntity.add(new TextComponent(popComponent.toString(),
                 (BitmapFont) Resources.loadResource("PLANET_POPULATION_FONT").get()));
@@ -45,7 +45,7 @@ class Planets {
                 // If there is a selected planet...
                 if (selectedPlanetEntity != null) {
                     // If the player is hovering over an owned planet...
-                    if (planet.type == Planet.Type.PLAYER) {
+                    if (planet.getType() == Planet.Type.PLAYER) {
                         // Which is NOT the selected planet...
                         if (selectedPlanetEntity != newPlanetEntity) {
                             // Show green aura
@@ -59,7 +59,7 @@ class Planets {
                     }
                 } else { // If there is not a selected planet...
                     // And the player is hovering over an owned planet...
-                    if (planet.type == Planet.Type.PLAYER) {
+                    if (planet.getType() == Planet.Type.PLAYER) {
                         // Show white aura
                         planetHighlightEntity.add(new SpriteComponent(
                                 (Texture) Resources.loadResource("PLANET_SELECT_HIGHLIGHT_TEXTURE").get()));
@@ -68,7 +68,7 @@ class Planets {
 
                 planetHighlightEntity.add(new BoundsComponent(
                                 x, y,
-                                planetSizeStandard * planet.sizeMultiplier, planetSizeStandard * planet.sizeMultiplier));
+                                planetSizeStandard * planet.getSizeMultiplier(), planetSizeStandard * planet.getSizeMultiplier()));
 
                 planetHighlightEntity.add(new RenderedComponent());
             }
@@ -85,7 +85,7 @@ class Planets {
 
                 // If there is no current selected planet...
                 if (selectedPlanetEntity == null) {
-                    if (planet.type == Planet.Type.PLAYER) {
+                    if (planet.getType() == Planet.Type.PLAYER) {
                         // Select planet
                         selectedPlanetEntity = newPlanetEntity;
 
@@ -112,17 +112,17 @@ class Planets {
 
                     } else { // If the planet clicked is not selected...
 
-                        if (selectedPlanetEntity.getComponent(PopulationComponent.class).population >= 2) {
+                        if (selectedPlanetEntity.getComponent(PopulationComponent.class).getPopulation() >= 2) {
 
                             // Launch fleet at it!
                             engine.addEntity(Fleets.newFleet(
-                                    Math.round(selectedPlanetEntity.getComponent(PopulationComponent.class).population) / 2,
+                                    Math.round(selectedPlanetEntity.getComponent(PopulationComponent.class).getPopulation()) / 2,
                                     selectedPlanetEntity.getComponent(BoundsComponent.class).getPosition(),
                                     new Vector2(mousePosition.x, Gdx.graphics.getHeight() -  mousePosition.y)));
 
                             // Half planet's population, compensating for the interval timer's increases
-                            selectedPlanetEntity.getComponent(PopulationComponent.class).population =
-                                    (Math.round(selectedPlanetEntity.getComponent(PopulationComponent.class).population / 2)) - 1;
+                            selectedPlanetEntity.getComponent(PopulationComponent.class).setPopulation(
+                                    (Math.round(selectedPlanetEntity.getComponent(PopulationComponent.class).getPopulation() / 2)) - 1);
 
                         }
 
@@ -171,7 +171,7 @@ class Planets {
     }
 
     static Entity newPlanetEntity(Planet planet, float x, float y) {
-        switch (planet.type) {
+        switch (planet.getType()) {
             case EMPTY:
                 return newEmptyPlanet(planet, x, y);
             case PLAYER:

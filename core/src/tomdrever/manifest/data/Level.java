@@ -1,8 +1,35 @@
 package tomdrever.manifest.data;
 
 public class Level {
-    public String name;
-    public String prerequisiteLevelName = "none";
+    private String name;
 
-    public Planet[][] planets;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+
+    private String prerequisiteLevelName = "none";
+
+    public String getPrerequisiteLevelName() {
+        return prerequisiteLevelName;
+    }
+
+    public void setPrerequisiteLevelName(String prerequisiteLevelName) {
+        this.prerequisiteLevelName = prerequisiteLevelName;
+    }
+
+
+    private Planet[][] planets;
+
+    public Planet[][] getPlanets() {
+        return planets;
+    }
+
+    public void setPlanets(Planet[][] planets) {
+        this.planets = planets;
+    }
 }

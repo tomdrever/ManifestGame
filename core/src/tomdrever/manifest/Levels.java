@@ -12,12 +12,12 @@ import tomdrever.manifest.data.Planet;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class Levels {
-    private Map<String, Level> levels;
+class Levels {
+    private Map<String, Level> levelMap;
 
     private Levels() { }
 
-    public static Levels loadLevels() {
+    static Levels loadLevels() {
         Levels levels = new Levels();
 
         Gson gson = new GsonBuilder().create();
@@ -25,33 +25,33 @@ public class Levels {
 
         Map<String, Level> loadedLevelsDictionary = new LinkedTreeMap<String, Level>() ;
         for (Level level: loadedLevels) {
-            loadedLevelsDictionary.put(level.name, level);
+            loadedLevelsDictionary.put(level.getName(), level);
         }
 
-        levels.levels = loadedLevelsDictionary;
+        levels.levelMap = loadedLevelsDictionary;
 
         return levels;
     }
 
-    public Entity[] getLevel(String name) throws Exception {
+    Entity[] getLevel(String name) throws Exception {
         ArrayList<Entity> entities = new ArrayList();
 
-        Level level = levels.get(name);
+        Level level = levelMap.get(name);
 
         if (level == null) {
-            throw new LevelNotFoundException(String.format("No level with name:  found", name));
+            throw new LevelNotFoundException(String.format("No level with name: %s found", name));
         }
 
         // Padding is applied before and after each planet
 
         // Calculate y positions (positions for each row)
-        int yPlanetCount = level.planets.length;
+        int yPlanetCount = level.getPlanets().length;
         int yPadding = yPlanetCount == 1 ? 0 : 50 - (10 * yPlanetCount);
         int y = (Gdx.graphics.getHeight() / 2) +
                 (((yPlanetCount - 1) * (Planets.planetSizeStandard)) / 2)
                     + ((yPlanetCount) * yPadding);
 
-        for (Planet[] planetRow : level.planets) {
+        for (Planet[] planetRow : level.getPlanets()) {
 
             // Calculate x positions (positions for each planet in row)
             int xPlanetCount = planetRow.length;
@@ -66,8 +66,8 @@ public class Levels {
                 x += xPadding;
 
                 entities.add(Planets.newPlanetEntity(planet,
-                        x - ((Planets.planetSizeStandard * planet.sizeMultiplier) / 2),
-                        y- ((Planets.planetSizeStandard * planet.sizeMultiplier) / 2)));
+                        x - ((Planets.planetSizeStandard * planet.getSizeMultiplier()) / 2),
+                        y- ((Planets.planetSizeStandard * planet.getSizeMultiplier()) / 2)));
 
                 x += xPadding;
                 x += Planets.planetSizeStandard;
@@ -81,7 +81,7 @@ public class Levels {
     }
 
     public int getLevelCount() {
-        return levels.size();
+        return levelMap.size();
     }
 
     private class LevelNotFoundException extends Exception {

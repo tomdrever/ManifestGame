@@ -18,9 +18,9 @@ public class PopulationDisplaySystem extends IntervalIteratingSystem {
 
     @Override
     protected void processEntity(Entity entity) {
-        if (populationComponentMap.get(entity).population < populationComponentMap.get(entity).maxPopulation) {
-            populationComponentMap.get(entity).population += populationComponentMap.get(entity).growthRate;
-            textComponentMap.get(entity).text = populationComponentMap.get(entity).toString();
+        if (populationComponentMap.get(entity).getPopulation() < populationComponentMap.get(entity).getMaxPopulation()) {
+            populationComponentMap.get(entity).increasePopulation(populationComponentMap.get(entity).getGrowthRate());
+            textComponentMap.get(entity).setText(populationComponentMap.get(entity).toString());
         }
     }
 }

@@ -4,8 +4,26 @@ import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.math.Vector2;
 
 public class OnClickComponent implements Component {
-    public OnClick onClick;
-    public boolean isActive = true;
+    private OnClick onClick;
+
+    public OnClick getOnClick() {
+        return onClick;
+    }
+
+    public void setOnClick(OnClick onClick) {
+        this.onClick = onClick;
+    }
+
+
+    private boolean isActive = true;
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
 
     public OnClickComponent(OnClick onClick) {
         this.onClick = onClick;

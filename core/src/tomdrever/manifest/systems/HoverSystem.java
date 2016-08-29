@@ -21,20 +21,20 @@ public class HoverSystem extends EntitySystem {
         for (int i = 0; i < entities.size(); ++i) {
             final Entity entity = entities.get(i);
             Rectangle entityBounds = boundsComponentMap.get(entity).getBounds();
-            if (onHoverComponentMap.get(entity).isActive) {
+            if (onHoverComponentMap.get(entity).isActive()) {
                 // Invert libgdx y co-ord
                 if (entityBounds.contains(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY())) {
-                    final OnHoverComponent.OnHover entityOnHover = onHoverComponentMap.get(entity).onHover;
+                    final OnHoverComponent.OnHover entityOnHover = onHoverComponentMap.get(entity).getOnHover();
 
                     entityOnHover.onMouseEnter();
 
-                    onHoverComponentMap.get(entity).isHoveredOver = true;
-                } else if (onHoverComponentMap.get(entity).isHoveredOver) {
-                    final OnHoverComponent.OnHover entityOnHover = onHoverComponentMap.get(entity).onHover;
+                    onHoverComponentMap.get(entity).setHoveredOver(true);
+                } else if (onHoverComponentMap.get(entity).isHoveredOver()) {
+                    final OnHoverComponent.OnHover entityOnHover = onHoverComponentMap.get(entity).getOnHover();
 
                     entityOnHover.onMouseExit();
 
-                    onHoverComponentMap.get(entity).isHoveredOver = false;
+                    onHoverComponentMap.get(entity).setHoveredOver(false);
                 }
             }
         }

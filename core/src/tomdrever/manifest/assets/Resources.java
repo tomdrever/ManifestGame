@@ -12,39 +12,34 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 
 public class Resources {
-    private static HashMap<String, Resource> resources;
+    private static HashMap<String, Resource> resources = new HashMap<String, Resource>();
 
-    private static final HashMap<String, ResourceType> resourceTypes;
+    private static final HashMap<String, ResourceType> resourceTypeMap;
     static {
-        resourceTypes = new HashMap<String, ResourceType>();
-        resourceTypes.put("png", ResourceType.TEXTURE);
-        resourceTypes.put("jpg", ResourceType.TEXTURE);
-        resourceTypes.put("mp3", ResourceType.AUDIO);
-        resourceTypes.put("txt", ResourceType.TEXT);
-        resourceTypes.put("json", ResourceType.TEXT);
-        resourceTypes.put("fnt", ResourceType.FONT);
+        resourceTypeMap = new HashMap<String, ResourceType>();
+        resourceTypeMap.put("png", ResourceType.TEXTURE);
+        resourceTypeMap.put("jpg", ResourceType.TEXTURE);
+        resourceTypeMap.put("mp3", ResourceType.AUDIO);
+        resourceTypeMap.put("txt", ResourceType.TEXT);
+        resourceTypeMap.put("json", ResourceType.TEXT);
+        resourceTypeMap.put("fnt", ResourceType.FONT);
     }
 
     private enum ResourceType { TEXTURE, AUDIO, TEXT, FONT }
 
     public static void loadResources() {
-        // Get all files in resources
-        // Texture, Font, JSON,
-        // Store in dict: "$FILENAME" + "_" + type
-        // e.g. "levels.json" -> "LEVELS_TEXT",
-        // "debug/fleet.png" -> "DEBUG_FLEET_TEXTURE"
         resources = new HashMap<String, Resource>();
 
         // Get current directory (including lone files)
+        // This is recursive, looping down all directories in the assets folder
         loadResourceFromDirectory(Gdx.files.internal(".").toString());
     }
 
     private static void loadResourceFromDirectory(String directoryName) {
-        // get all files & loadLevels
         File directory = new File(directoryName);
 
-        // get all the files from a directory
         File[] fileList = directory.listFiles();
+
         if (fileList != null) {
             for (File file : fileList) {
                 if (file.isFile()) {
@@ -52,7 +47,7 @@ public class Resources {
                     String fileType = Files.getFileExtension(file.getName());
                     String resourceNameSuffix = "";
                     Resource resource = null;
-                    switch (resourceTypes.get(fileType)) {
+                    switch (resourceTypeMap.get(fileType)) {
                         case TEXTURE:
                             resourceNameSuffix = "_TEXTURE";
                             resource = new Resource<Texture>(new Texture(file.getPath()));
@@ -63,6 +58,7 @@ public class Resources {
                             break;
                         case TEXT:
                             resourceNameSuffix = "_TEXT";
+                            // Quickly read text from file
                             byte[] encodedText = new byte[0];
                             try {
                                 encodedText = java.nio.file.Files.readAllBytes(Paths.get(file.getPath()));
@@ -79,9 +75,7 @@ public class Resources {
 
                     // If the filetype has a resource name extension attached to it...
                     if (!(resourceNameSuffix.isEmpty())) {
-                        // Format resource name, removing file extension and adding type identifier.
-
-                        // Get the name of all files above, between this file and Gdx.files.internal(".").toString()
+                        // Get the name of all files above, between this file and the top level of the assets directory
                         File tempFileForIterating = file;
                         String directoryPrefix = "";
                         while (!tempFileForIterating.getParentFile().getName().equals(".")) {
@@ -91,13 +85,14 @@ public class Resources {
                             tempFileForIterating = tempFileForIterating.getParentFile();
                         }
 
+                        // Format resource name, removing file extension and adding type identifier.
                         String resourceName = directoryPrefix + file.getName().replace("." + fileType, "").toUpperCase()
                                 + resourceNameSuffix;
 
                         resources.put(resourceName, resource);
                     }
                 } else if (file.isDirectory()) {
-                    // Load resources from sub dir
+                    // Load resources from subdirectory
                     loadResourceFromDirectory(file.getAbsolutePath());
                 }
             }
@@ -115,8 +110,7 @@ public class Resources {
             }
 
             return null;
-        }
-        else {
+        } else {
             return resource;
         }
     }

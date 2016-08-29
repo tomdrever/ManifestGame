@@ -25,12 +25,14 @@ public class RenderingSystem extends IteratingSystem {
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        if (entity.getComponent(RenderedComponent.class).visible) {
-            Sprite entitySprite = spriteComponentMap.get(entity).sprite;
+        if (entity.getComponent(RenderedComponent.class).isVisible()) {
+            Sprite entitySprite = spriteComponentMap.get(entity).getSprite();
             Vector2 entityPosition = boundsComponentMap.get(entity).getPosition();
             Vector2 entitySize = boundsComponentMap.get(entity).getSize();
 
-            TextureRegion region = new TextureRegion(entitySprite.getTexture(), entitySprite.getTexture().getWidth(), entitySprite.getTexture().getHeight());
+            TextureRegion region = new TextureRegion(entitySprite.getTexture(),
+                    entitySprite.getTexture().getWidth(),
+                    entitySprite.getTexture().getHeight());
 
             spriteBatch.draw(region,
                     entityPosition.x,
