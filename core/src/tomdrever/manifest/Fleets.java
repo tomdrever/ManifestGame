@@ -16,14 +16,15 @@ class Fleets {
     static Entity newFleet(final int fleetCapacity, Vector2 position, Vector2 destination) {
         Entity fleet = new Entity();
         // TODO - Change the texture  of the fleet based off of its population
-        fleet.add(new SpriteComponent((Texture) Resources.loadResource("DEBUG_FLEET_TEXTURE").get()));
-        fleet.add(new BoundsComponent(position.x, position.y, fleetSizeStandard, fleetSizeStandard));
+        fleet.add(new SpriteComponent((Texture) Resources.loadResource("FLEET_SMALL_TEXTURE").get()));
+        fleet.add(new BoundsComponent(position.x, position.y, 94, 56));
         fleet.add(new LinearMovementComponent(
                 new Vector2(destination.x - (fleetSizeStandard / 2), destination.y - (fleetSizeStandard / 2)), 3f,
                 new LinearMovementComponent.OnDestinationReached() {
                     @Override
                     public void run() {
                         // TODO - Calculate targeted planet's losses, based off of fleet size
+                        // TODO - animate fleet descent?
                     }
             }));
 
