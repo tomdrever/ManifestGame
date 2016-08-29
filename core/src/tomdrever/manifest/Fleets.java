@@ -11,15 +11,30 @@ import tomdrever.manifest.components.SpriteComponent;
 
 class Fleets {
 
-    private final static int fleetSizeStandard = 64;
-
     static Entity newFleet(final int fleetCapacity, Vector2 position, Vector2 destination) {
         Entity fleet = new Entity();
         // TODO - Change the texture  of the fleet based off of its population
-        fleet.add(new SpriteComponent((Texture) Resources.loadResource("FLEET_SMALL_TEXTURE").get()));
-        fleet.add(new BoundsComponent(position.x, position.y, 94, 56));
+        int width, height;
+        String resourceName;
+        if (fleetCapacity >= 1 && fleetCapacity < 5) {
+            width = 60;
+            height = 40;
+            resourceName = "FLEET_SMALL_TEXTURE";
+        } else if (fleetCapacity >= 5 && fleetCapacity < 10) {
+            width = 110;
+            height = 60;
+            resourceName = "FLEET_MEDIUM_TEXTURE";
+        } else  {
+            // Here, fleet capacity should always be greater than 10 - hence "large"
+            width = 130;
+            height = 70;
+            resourceName = "FLEET_LARGE_TEXTURE";
+        }
+        fleet.add(new BoundsComponent(position.x, position.y, width, height));
+        fleet.add(new SpriteComponent((Texture) Resources.loadResource(resourceName).get()));
+
         fleet.add(new LinearMovementComponent(
-                new Vector2(destination.x - (fleetSizeStandard / 2), destination.y - (fleetSizeStandard / 2)), 3f,
+                new Vector2(destination.x - (width / 2), destination.y - (height / 2)), 3f,
                 new LinearMovementComponent.OnDestinationReached() {
                     @Override
                     public void run() {

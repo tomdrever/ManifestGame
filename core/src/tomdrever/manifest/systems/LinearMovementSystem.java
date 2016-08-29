@@ -26,8 +26,6 @@ public class LinearMovementSystem extends IteratingSystem {
 
         // If the entity has just begun moving, first set up the rotation and movement offset
         if (!linearMovementComponentMap.get(entity).getHasBegunMoving()) {
-            // Calculate rotation
-
             Sprite sprite = spriteComponentMap.get(entity).getSprite();
 
             float angle = (float) Math.toDegrees(Math.atan2(destination.y - initialPosition.y, destination.x - initialPosition.x));
@@ -35,14 +33,17 @@ public class LinearMovementSystem extends IteratingSystem {
                 angle += 360;
             }
 
-            sprite.rotate(angle);
+            // REM - the math is here now, too. It is best you do not question it.
+            sprite.rotate(180 + angle);
 
             linearMovementComponentMap.get(entity).setHasBegunMoving(true);
 
             float speedMultiplier = linearMovementComponentMap.get(entity).getSpeedMultiplier();
 
             // REM - do not touch the math. It will not like it. You have been warned.
-            linearMovementComponentMap.get(entity).setOffset(new Vector2(destination.x - initialPosition.x, destination.y - initialPosition.y).nor().scl(Math.min(initialPosition.dst(destination.x, destination.y), speedMultiplier)));
+            linearMovementComponentMap.get(entity).setOffset(
+                    new Vector2(destination.x - initialPosition.x,
+                            destination.y - initialPosition.y).nor().scl(Math.min(initialPosition.dst(destination.x, destination.y), speedMultiplier)));
         }
 
         // Increase position by offset
@@ -58,8 +59,6 @@ public class LinearMovementSystem extends IteratingSystem {
             if (linearMovementComponentMap.get(entity).getOnDestinationReached() != null) {
                 linearMovementComponentMap.get(entity).getOnDestinationReached().run();
             }
-
-            System.out.println(String.format("Fleet reached destination at: %f, %f", updatedPosition.x, updatedPosition.y));
 
             entity.removeAll();
             getEngine().removeEntity(entity);

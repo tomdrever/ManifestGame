@@ -18,10 +18,10 @@
         },
         {
           "initialPopulation": 0,
-          "maxPopulation": 0,
+          "maxPopulation": 20,
           "sizeMultiplier": 1,
           "growthRate": 1,
-          "type": "EMPTY"
+          "type": "PLAYER"
         }],
         [{
           "initialPopulation": 12,
@@ -41,7 +41,7 @@
         "maxPopulation": 32,
         "sizeMultiplier": 1,
         "growthRate": 1,
-        "type": "PLAYER"}
+        "type": "ENEMY"}
       ]
 	]
 }, {
