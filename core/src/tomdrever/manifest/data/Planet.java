@@ -9,6 +9,17 @@ public class Planet {
         NOMADIC
     }
 
+    private Type type;
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+
     private int initialPopulation;
 
     public int getInitialPopulation() {
@@ -51,14 +62,4 @@ public class Planet {
     public void setSizeMultiplier(float sizeMultiplier) {
         this.sizeMultiplier = sizeMultiplier;
     }
-
-    public Type getType() {
-        return type;
-    }
-
-    public void setType(Type type) {
-        this.type = type;
-    }
-
-    private Type type;
 }

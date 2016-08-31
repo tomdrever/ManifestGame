@@ -59,7 +59,7 @@ public class LinearMovementComponent implements Component {
     }
 
 
-    public LinearMovementComponent(Vector2 destination, float speed) {
+    private LinearMovementComponent(Vector2 destination, float speed) {
         this.destination = destination;
         this.speedMultiplier = speed;
     }

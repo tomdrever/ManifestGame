@@ -1,16 +1,19 @@
 package tomdrever.manifest;
 
+import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import tomdrever.manifest.assets.Resources;
 import tomdrever.manifest.components.LinearMovementComponent;
+import tomdrever.manifest.components.LinearScalingComponent;
 import tomdrever.manifest.components.SpriteComponent;
 
 class Fleets {
+    private static Engine engine;
 
     static Entity newFleet(final int fleetCapacity, Vector2 position, Vector2 destination) {
-        Entity fleet = new Entity();
+        final Entity fleet = new Entity();
         int width, height;
         String resourceName;
         if (fleetCapacity >= 1 && fleetCapacity < 5) {
@@ -34,10 +37,28 @@ class Fleets {
                 new LinearMovementComponent.OnDestinationReached() {
                     @Override
                     public void run() {
+                        // TODO - remove linearComponent
+                        fleet.remove(LinearMovementComponent.class);
+
+                        fleet.add(new LinearScalingComponent(new Vector2(0, 0), 3f, new LinearScalingComponent.OnScalingFinished() {
+                            @Override
+                            public void run() {
+                                // TODO - remove scalingComponent
+                                // TODO - Delete entity
+                                fleet.removeAll();
+                                engine.removeEntity(fleet);
+                            }
+                        }));
                         // TODO - Calculate targeted planet's losses, based off of fleet size
-                        // TODO - animate fleet descent?
                     }
             }));
+
+
+
         return fleet;
+    }
+
+    static void setEngine(Engine engine1) {
+        engine = engine1;
     }
 }

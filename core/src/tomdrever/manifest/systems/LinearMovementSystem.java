@@ -57,9 +57,6 @@ public class LinearMovementSystem extends IteratingSystem {
             if (linearMovementComponentMap.get(entity).getOnDestinationReached() != null) {
                 linearMovementComponentMap.get(entity).getOnDestinationReached().run();
             }
-
-            entity.removeAll();
-            getEngine().removeEntity(entity);
         }
     }
 }

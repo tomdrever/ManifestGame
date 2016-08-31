@@ -29,6 +29,7 @@ public class ManifestGame extends ApplicationAdapter {
         Resources.loadResources();
 
         Planets.setEngine(engine);
+        Fleets.setEngine(engine);
 
         RenderingSystem renderingSystem = new RenderingSystem(spriteBatch);
         engine.addSystem(renderingSystem);
@@ -49,6 +50,9 @@ public class ManifestGame extends ApplicationAdapter {
 
         LinearMovementSystem linearMovementSystem = new LinearMovementSystem();
         engine.addSystem(linearMovementSystem);
+
+        LinearScalingSystem linearScalingSystem = new LinearScalingSystem();
+        engine.addSystem(linearScalingSystem);
 
         Levels levels = Levels.loadLevels();
 

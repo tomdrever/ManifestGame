@@ -18,9 +18,11 @@ public class SpriteComponent implements Component {
         this.sprite = sprite;
     }
 
+
     public void setTexture(Texture texture) {
         this.sprite.setTexture(texture);
     }
+
 
     public Vector2 getSize() {
         return new Vector2(sprite.getWidth(), sprite.getHeight());
@@ -33,7 +35,8 @@ public class SpriteComponent implements Component {
     public void setSize(Vector2 size) {
         sprite.setSize(size.x, size.y);
     }
-    
+
+
     public Vector2 getPosition() {
         return new Vector2(sprite.getX(), sprite.getY());
     }
@@ -46,9 +49,11 @@ public class SpriteComponent implements Component {
         sprite.setPosition(position.x, position.y);
     }
 
+
     public Rectangle getBounds() {
         return new Rectangle(sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
     }
+
 
     public SpriteComponent(Vector2 size, Vector2 position) {
         this(new Texture((int)size.x, (int)size.y, Pixmap.Format.RGBA8888), size, position);
