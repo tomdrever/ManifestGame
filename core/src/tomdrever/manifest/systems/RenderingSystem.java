@@ -8,41 +8,37 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import tomdrever.manifest.components.BoundsComponent;
-import tomdrever.manifest.components.RenderedComponent;
 import tomdrever.manifest.components.SpriteComponent;
 
 public class RenderingSystem extends IteratingSystem {
     private SpriteBatch spriteBatch;
 
     private ComponentMapper<SpriteComponent> spriteComponentMap = ComponentMapper.getFor(SpriteComponent.class);
-    private ComponentMapper<BoundsComponent> boundsComponentMap = ComponentMapper.getFor(BoundsComponent.class);
 
     public RenderingSystem(SpriteBatch spriteBatch) {
-        super(Family.all(RenderedComponent.class, SpriteComponent.class, BoundsComponent.class).get());
+        super(Family.all( SpriteComponent.class).get());
         this.spriteBatch = spriteBatch;
     }
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        if (entity.getComponent(RenderedComponent.class).isVisible()) {
-            Sprite entitySprite = spriteComponentMap.get(entity).getSprite();
-            Vector2 entityPosition = boundsComponentMap.get(entity).getPosition();
-            Vector2 entitySize = boundsComponentMap.get(entity).getSize();
+        Sprite entitySprite = spriteComponentMap.get(entity).getSprite();
+        Vector2 entityPosition = spriteComponentMap.get(entity).getPosition();
+        Vector2 entitySize = spriteComponentMap.get(entity).getSize();
 
-            TextureRegion region = new TextureRegion(entitySprite.getTexture(),
-                    entitySprite.getTexture().getWidth(),
-                    entitySprite.getTexture().getHeight());
+        TextureRegion region = new TextureRegion(entitySprite.getTexture(),
+                entitySprite.getTexture().getWidth(),
+                entitySprite.getTexture().getHeight());
 
-            spriteBatch.draw(region,
-                    entityPosition.x,
-                    entityPosition.y,
-                    entitySize.x / 2,
-                    entitySize.y / 2,
-                    entitySize.x,
-                    entitySize.y,
-                    1, 1,
-                    entitySprite.getRotation(), false);
-        }
+        spriteBatch.draw(region,
+                entityPosition.x,
+                entityPosition.y,
+                entitySize.x / 2,
+                entitySize.y / 2,
+                entitySize.x,
+                entitySize.y,
+                1, 1,
+                entitySprite.getRotation(), false);
+
     }
 }

@@ -67,7 +67,7 @@ class Levels {
 
                 entities.add(Planets.newPlanetEntity(planet,
                         x - ((Planets.planetSizeStandard * planet.getSizeMultiplier()) / 2),
-                        y- ((Planets.planetSizeStandard * planet.getSizeMultiplier()) / 2)));
+                        y - ((Planets.planetSizeStandard * planet.getSizeMultiplier()) / 2)));
 
                 x += xPadding;
                 x += Planets.planetSizeStandard;

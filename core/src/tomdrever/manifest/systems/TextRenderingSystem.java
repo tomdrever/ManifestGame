@@ -8,19 +8,19 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import tomdrever.manifest.components.BoundsComponent;
+import tomdrever.manifest.components.SpriteComponent;
 import tomdrever.manifest.components.TextComponent;
 
 public class TextRenderingSystem extends IteratingSystem {
     private SpriteBatch spriteBatch;
 
     private ComponentMapper<TextComponent> textComponentMap = ComponentMapper.getFor(TextComponent.class);
-    private ComponentMapper<BoundsComponent> boundsComponentMap = ComponentMapper.getFor(BoundsComponent.class);
+    private ComponentMapper<SpriteComponent> spriteComponentMap = ComponentMapper.getFor(SpriteComponent.class);
 
     private final GlyphLayout glyphLayout = new GlyphLayout();
 
     public TextRenderingSystem(SpriteBatch spriteBatch) {
-        super(Family.all(TextComponent.class, BoundsComponent.class).get());
+        super(Family.all(TextComponent.class, SpriteComponent.class).get());
         this.spriteBatch = spriteBatch;
     }
 
@@ -29,8 +29,8 @@ public class TextRenderingSystem extends IteratingSystem {
         BitmapFont entityFont = textComponentMap.get(entity).getFont();
         String entityText = textComponentMap.get(entity).getText();
 
-        Vector2 entityPosition = boundsComponentMap.get(entity).getPosition();
-        Vector2 entitySize = boundsComponentMap.get(entity).getSize();
+        Vector2 entityPosition = spriteComponentMap.get(entity).getPosition();
+        Vector2 entitySize = spriteComponentMap.get(entity).getSize();
 
         // Calculate centered position of text and draw
         glyphLayout.setText(entityFont, entityText);

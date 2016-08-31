@@ -4,23 +4,23 @@ import com.badlogic.ashley.core.*;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
-import tomdrever.manifest.components.BoundsComponent;
 import tomdrever.manifest.components.OnHoverComponent;
+import tomdrever.manifest.components.SpriteComponent;
 
 public class HoverSystem extends EntitySystem {
     private ImmutableArray<Entity> entities;
 
     private ComponentMapper<OnHoverComponent> onHoverComponentMap = ComponentMapper.getFor(OnHoverComponent.class);
-    private ComponentMapper<BoundsComponent> boundsComponentMap = ComponentMapper.getFor(BoundsComponent.class);
+    private ComponentMapper<SpriteComponent> spriteComponentMap = ComponentMapper.getFor(SpriteComponent.class);
 
     public void addedToEngine(Engine engine) {
-        entities = engine.getEntitiesFor(Family.all(BoundsComponent.class, OnHoverComponent.class).get());
+        entities = engine.getEntitiesFor(Family.all(SpriteComponent.class, OnHoverComponent.class).get());
     }
 
     public void update(float deltaTime) {
         for (int i = 0; i < entities.size(); ++i) {
             final Entity entity = entities.get(i);
-            Rectangle entityBounds = boundsComponentMap.get(entity).getBounds();
+            Rectangle entityBounds = spriteComponentMap.get(entity).getBounds();
             if (onHoverComponentMap.get(entity).isActive()) {
                 // Invert libgdx y co-ord
                 if (entityBounds.contains(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY())) {

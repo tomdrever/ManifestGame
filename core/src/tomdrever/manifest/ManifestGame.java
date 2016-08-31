@@ -8,8 +8,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import tomdrever.manifest.assets.Resources;
-import tomdrever.manifest.components.BoundsComponent;
-import tomdrever.manifest.components.RenderedComponent;
 import tomdrever.manifest.components.SpriteComponent;
 import tomdrever.manifest.systems.*;
 
@@ -77,9 +75,8 @@ public class ManifestGame extends ApplicationAdapter {
     private void addBackground() {
         Entity background = new Entity();
 
-        background.add(new RenderedComponent())
-                .add(new BoundsComponent(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()))
-                .add(new SpriteComponent((Texture) Resources.loadResource("BACKGROUND_TEXTURE").get()));
+        background.add(new SpriteComponent((Texture) Resources.loadResource("BACKGROUND_TEXTURE").get(),
+                Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), 0, 0));
 
         engine.addEntity(background);
     }

@@ -4,16 +4,13 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import tomdrever.manifest.assets.Resources;
-import tomdrever.manifest.components.BoundsComponent;
 import tomdrever.manifest.components.LinearMovementComponent;
-import tomdrever.manifest.components.RenderedComponent;
 import tomdrever.manifest.components.SpriteComponent;
 
 class Fleets {
 
     static Entity newFleet(final int fleetCapacity, Vector2 position, Vector2 destination) {
         Entity fleet = new Entity();
-        // TODO - Change the texture  of the fleet based off of its population
         int width, height;
         String resourceName;
         if (fleetCapacity >= 1 && fleetCapacity < 5) {
@@ -30,8 +27,7 @@ class Fleets {
             height = 70;
             resourceName = "FLEET_LARGE_TEXTURE";
         }
-        fleet.add(new BoundsComponent(position.x, position.y, width, height));
-        fleet.add(new SpriteComponent((Texture) Resources.loadResource(resourceName).get()));
+        fleet.add(new SpriteComponent((Texture) Resources.loadResource(resourceName).get(), width, height, position.x, position.y));
 
         fleet.add(new LinearMovementComponent(
                 new Vector2(destination.x - (width / 2), destination.y - (height / 2)), 3f,
@@ -42,8 +38,6 @@ class Fleets {
                         // TODO - animate fleet descent?
                     }
             }));
-
-        fleet.add(new RenderedComponent());
         return fleet;
     }
 }
